@@ -217,5 +217,18 @@ public abstract class Animal {
 	}
 
 
+
+
+
+	@Override
+	public String toString() {
+		return "Animal [specie=" + specie + ", gender=" + gender + ", weight=" + weight + ", age=" + age + ", size="
+				+ size + ", isHungry=" + isHungry + ", isSick=" + isSick + ", isSleeping=" + isSleeping + "]";
+	}
+
+	
+	
+	
+
 	
 }

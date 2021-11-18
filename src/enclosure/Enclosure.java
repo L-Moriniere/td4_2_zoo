@@ -3,25 +3,26 @@
  */
 package enclosure;
 import java.util.ArrayList;
+import java.util.ListIterator;
+
 import animal.Animal;
 
 /**
  * @author logan
  *
  */
-public class Enclosure {
-	
-	private String name;
-	private double area;
-	private int nb_max, nb_animal;
-	private ArrayList<Animal> listOfAnimal = new ArrayList<Animal>();
-	
+public interface Enclosure {
 
+	
+	public String toString();
+	
 	/**
-	 * 
+	 * Function to implement
+	 * @param a
 	 */
-	public Enclosure() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
+	public void addAnimal(Animal a);
+	public void removeAnimal(Animal a);
+	public void feedAllAnimal();
+	public void toClean();
 }
