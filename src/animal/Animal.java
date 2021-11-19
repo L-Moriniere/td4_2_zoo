@@ -11,7 +11,7 @@ public abstract class Animal {
 	
 	private String specie;
 	private Gender gender;
-	private int weight, age;
+	private int weight, age, pregnancy;
 	private double size;
 	private boolean isHungry, isSick, isSleeping;
 	
@@ -22,6 +22,7 @@ public abstract class Animal {
 		super();
 	}
 
+	
 	
 	
 	
@@ -37,7 +38,7 @@ public abstract class Animal {
 	 * @param isSleeping
 	 */
 	public Animal(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping) {
+			boolean isSleeping, int pregnancy) {
 		super();
 		this.specie = specie;
 		this.gender = gender;
@@ -47,6 +48,29 @@ public abstract class Animal {
 		this.isHungry = isHungry;
 		this.isSick = isSick;
 		this.isSleeping = isSleeping;
+		this.pregnancy = pregnancy;
+	}
+
+
+
+
+
+	/**
+	 * @return the pregnancy
+	 */
+	public int getPregnancy() {
+		return pregnancy;
+	}
+
+
+
+
+
+	/**
+	 * @param pregnancy the pregnancy to set
+	 */
+	public void setPregnancy(int pregnancy) {
+		this.pregnancy = pregnancy;
 	}
 
 
@@ -159,18 +183,26 @@ public abstract class Animal {
 		this.isSleeping = isSleeping;
 	}	
 	
+	public String animalSays() {
+		return this.getClass().getSimpleName()+" says: ";
+	}
+	
+	
+	public void finalize()  {
+		System.out.println(this.animalSays()+"FATALITY");
+	}
 	
 	
 	/**
 	 * make an animal to eat
 	 */
-	public void eat() {
+	public void toEat() {
 		if (!this.isSleeping() && this.isHungry()) {
 			this.setHungry(false);
-			System.out.println("It was some good fucking food");
+			System.out.println(this.animalSays()+"It was some good fucking food");
 		}
 		else
-			System.out.println("I'm not hungry");
+			System.out.println(this.animalSays()+"I'm not hungry");
 	}
 	
 	
@@ -184,7 +216,7 @@ public abstract class Animal {
 	 */
 	public void toHeal() {
 		this.setSick(false);
-		System.out.println("Thank you master");
+		System.out.println(this.animalSays()+"Thank you master");
 	}
 	
 	
@@ -195,10 +227,10 @@ public abstract class Animal {
 		if (this.isSleeping())
 		{
 			this.setSleeping(false);
-			System.out.println("I wake up");
+			System.out.println(this.animalSays()+"I wake up");
 		}
 		else
-			System.out.println("I'm awake");
+			System.out.println(this.animalSays()+"I'm awake");
 			
 	}
 	
@@ -209,10 +241,10 @@ public abstract class Animal {
 		if (!this.isSleeping())
 		{
 			this.setSleeping(true);
-			System.out.println("I sleep");
+			System.out.println(this.animalSays()+"I sleep");
 		}
 		else
-			System.out.println("I'm sleeping");
+			System.out.println(this.animalSays()+"I'm sleeping");
 			
 	}
 
@@ -222,8 +254,8 @@ public abstract class Animal {
 
 	@Override
 	public String toString() {
-		return "Animal [specie=" + specie + ", gender=" + gender + ", weight=" + weight + ", age=" + age + ", size="
-				+ size + ", isHungry=" + isHungry + ", isSick=" + isSick + ", isSleeping=" + isSleeping + "]";
+		return "\nNom: " + specie + "\t gender=" + gender + "\t weight=" + weight + "\t age=" + age + "\t size="
+				+ size + "\t isHungry=" + isHungry + "\t isSick=" + isSick + "\t isSleeping=" + isSleeping ;
 	}
 
 	

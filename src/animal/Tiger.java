@@ -9,7 +9,6 @@ package animal;
  */
 public class Tiger extends Animal implements CanVagabound, Mammal {
 	
-	private final int pregnancy = 104;
 
 	/**
 	 * 
@@ -39,13 +38,10 @@ public class Tiger extends Animal implements CanVagabound, Mammal {
 	 */
 	public Tiger(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 104);
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getPregnancy() {
-		return pregnancy;
-	}
 
 	@Override
 	public void toGiveBirth() {

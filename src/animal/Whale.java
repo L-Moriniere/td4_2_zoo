@@ -9,7 +9,6 @@ package animal;
  */
 public class Whale extends Animal implements Mammal, CanSwim {
 	
-	private final int pregnancy = 525;
 
 	/**
 	 * 
@@ -31,15 +30,11 @@ public class Whale extends Animal implements Mammal, CanSwim {
 	 */
 	public Whale(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 525);
 		// TODO Auto-generated constructor stub
 	}
 
 
-
-	public int getPregnancy() {
-		return pregnancy;
-	}
 	
 	@Override
 	public void toGiveBirth() {

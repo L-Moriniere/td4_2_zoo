@@ -9,7 +9,6 @@ package animal;
  */
 public class Bear extends Animal implements Mammal {
 	
-	private final int pregnancy = 265;
 
 	/**
 	 * 
@@ -32,15 +31,12 @@ public class Bear extends Animal implements Mammal {
 	 */
 	public Bear(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping,265);
 		// TODO Auto-generated constructor stub
 	}
 
 
 
-	public int getPregnancy() {
-		return pregnancy;
-	}
 	
 	@Override
 	public void toGiveBirth() {

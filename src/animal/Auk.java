@@ -9,7 +9,6 @@ package animal;
  */
 public class Auk extends Animal implements Oviparous, CanFly, CanSwim {
 	
-	private final int pregnancy = 65;
 	
 	/**
 	 * 
@@ -32,16 +31,13 @@ public class Auk extends Animal implements Oviparous, CanFly, CanSwim {
 	 */
 	public Auk(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping ,65);
+
 		// TODO Auto-generated constructor stub
 	}
 
 
-
-	public int getPregnancy() {
-		return pregnancy;
-	}
-
+	
 
 	@Override
 	public void toSwim() {

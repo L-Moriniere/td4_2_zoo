@@ -2,119 +2,51 @@
  * 
  */
 package enclosure;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
+import java.util.ArrayList;
 import animal.Animal;
 import animal.CanSwim;
+
 /**
  * @author logan
  *
  */
-public class Aquarium implements Enclosure {
+public class Aquarium extends Enclosure {
 	
-	private String name;
-	private double area;
-	private double deep;
+	private double depth;
 	private double salinity;
-	private int nb_max, nb_animal=0;
-	private ArrayList<Animal> listOfAnimal = new ArrayList<Animal>();
-	private Cleanness cleanness = Cleanness.GOOD;
 
 	
 	
-
-	/**
-	 * 
-	 */
-	public Aquarium() {
-		// TODO Auto-generated constructor stub
-	}
-	
-
-	/**
-	 * @param name
-	 */
-	public Aquarium(String name) {
-		super();
-		this.name = name;
-	}
-
-
 	/**
 	 * @param name
 	 * @param area
 	 * @param nb_max
+	 * @param nb_animal
+	 * @param listOfAnimal
+	 * @param cleanness
 	 */
 	public Aquarium(String name, double area, int nb_max) {
-		super();
-		this.name = name;
-		this.area = area;
-		this.nb_max = nb_max;
+		super(name, area, nb_max, 0, new ArrayList<Animal>(), null);
+		// TODO Auto-generated constructor stub
 	}
-
-
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-
-
-
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-
-
-	/**
-	 * @return the area
-	 */
-	public double getArea() {
-		return area;
-	}
-
-
-
-
-
-	/**
-	 * @param area the area to set
-	 */
-	public void setArea(double area) {
-		this.area = area;
-	}
-
 
 	
-	
 	/**
-	 * @return the deep
+	 * @return the depth
 	 */
-	public double getDeep() {
-		return deep;
+	public double getDepth() {
+		return depth;
 	}
 
 
 
 	/**
-	 * @param deep the deep to set
+	 * @param depth the depth to set
 	 */
-	public void setDeep(double deep) {
-		this.deep = deep;
+	public void setDepth(double depth) {
+		this.depth = depth;
 	}
-
-
 
 
 
@@ -126,6 +58,7 @@ public class Aquarium implements Enclosure {
 	}
 
 
+
 	/**
 	 * @param salinity the salinity to set
 	 */
@@ -133,125 +66,32 @@ public class Aquarium implements Enclosure {
 		this.salinity = salinity;
 	}
 
-
-	/**
-	 * @return the nb_max
-	 */
-	public int getNb_max() {
-		return nb_max;
-	}
-
-
-
-
-
-	/**
-	 * @param nb_max the nb_max to set
-	 */
-	public void setNb_max(int nb_max) {
-		this.nb_max = nb_max;
-	}
-
-
-
-
-
-	/**
-	 * @return the nb_animal
-	 */
-	public int getNb_animal() {
-		return nb_animal;
-	}
-
-
-
-
-
-	/**
-	 * @param nb_animal the nb_animal to set
-	 */
-	public void setNb_animal(int nb_animal) {
-		this.nb_animal = nb_animal;
-	}
-
-
-
-
-
-	/**
-	 * @return the listOfAnimal
-	 */
-	public ArrayList<Animal> getListOfAnimal() {
-		return listOfAnimal;
-	}
-
-
-
-
-
-	/**
-	 * @param listOfAnimal the listOfAnimal to set
-	 */
-	public void setListOfAnimal(ArrayList<Animal> listOfAnimal) {
-		this.listOfAnimal = listOfAnimal;
-	}
-
-
-
-
-
-	/**
-	 * @return the cleanness
-	 */
-	public Cleanness getCleanness() {
-		return cleanness;
-	}
-
-
-
-
-
-	/**
-	 * @param cleanness the cleanness to set
-	 */
-	public void setCleanness(Cleanness cleanness) {
-		this.cleanness = cleanness;
-	}
-
-
-
+	
 
 	@Override
 	public String toString() {
-		return "Enclosure [name=" + name + ", area=" + area + ", nb_max=" + nb_max + ", nb_animal=" + nb_animal
-				+ ", listOfAnimal=" + listOfAnimal + ", cleanness=" + cleanness + "]";
+		return super.toString()+ ", depth=" + this.getDepth() + ", salinity=" + this.getSalinity() + "]";
 	}
 
 
 	@Override
-	public void addAnimal(Animal a) {
-		if (a instanceof CanSwim)
-		{
-			this.listOfAnimal.add(a);
-			System.out.println(a.getSpecie()+" ajouté");
+	public boolean addAnimal(Animal a) {
+		if(this.getNb_max() >= this.getNb_animal()) {			
+			if (a instanceof CanSwim)
+			{
+				this.getListOfAnimal().add(a);
+				this.setNb_animal(this.getNb_animal()+1);
+				System.out.println(a.getSpecie()+" ajouté");
+				return true;
+			}
+			else {
+				System.out.println("Ce n'est pas un poisson");
+				return false;
+			}
+		}else {
+			System.out.println("L'enclos est plein !");
+			return false;
 		}
-		else System.out.println("Ce n'est pas un poisson");
-		
-	}
-
-	@Override
-	public void removeAnimal(Animal a) {
-		this.listOfAnimal.remove(a);
-		System.out.println(a.getSpecie()+" enlevé");
-	}
-
-	@Override
-	public void feedAllAnimal() {
-		ListIterator<Animal> li = this.getListOfAnimal().listIterator();
-		
-		while (li.hasNext())
-			li.next().eat();
-			
 	}
 
 	@Override
@@ -265,9 +105,9 @@ public class Aquarium implements Enclosure {
 			}
 			else System.out.println("L'enclos est déjà propre");
 		
-			if (this.getDeep() < 50 )
+			if (this.getDepth() < 50 )
 			{
-				this.setDeep(80);
+				this.setDepth(80);
 				System.out.println("Le bassin a été rempli");
 			}
 			else System.out.println("Le bassin est assez rempli");

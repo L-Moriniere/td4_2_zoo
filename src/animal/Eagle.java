@@ -9,7 +9,6 @@ package animal;
  */
 public class Eagle extends Animal implements Oviparous, CanFly {
 	
-	private final int pregnancy = 35;
 
 	/**
 	 * 
@@ -32,15 +31,11 @@ public class Eagle extends Animal implements Oviparous, CanFly {
 	 */
 	public Eagle(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 35);
+	
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	public int getPregnancy() {
-		return pregnancy;
-	}
 
 	@Override
 	public void toFly() {

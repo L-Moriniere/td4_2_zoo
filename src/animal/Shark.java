@@ -7,9 +7,8 @@ package animal;
  * @author logan
  *
  */
-public class Shark extends Animal implements Mammal, CanSwim {
+public class Shark extends Animal implements Oviparous, CanSwim {
 	
-	private final int pregnancy = 365;
 
 	/**
 	 * 
@@ -31,15 +30,11 @@ public class Shark extends Animal implements Mammal, CanSwim {
 	 */
 	public Shark(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
 			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping);
+		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 365);
 		// TODO Auto-generated constructor stub
 	}
 
 
-
-	public int getPregnancy() {
-		return pregnancy;
-	}
 
 	@Override
 	public void toSwim() {
@@ -48,7 +43,7 @@ public class Shark extends Animal implements Mammal, CanSwim {
 	}
 
 	@Override
-	public void toGiveBirth() {
+	public void toLayEggs() {
 		// TODO Auto-generated method stub
 		if (this.getGender() !=  Gender.F) {
 			System.out.println("You have to be a female to Give Birth sorry bro !");			
