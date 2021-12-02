@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 /**
  * @author logan
- *
  */
 public class Zoo {
 
@@ -21,6 +20,7 @@ public class Zoo {
     private Employee employee;
     private int nbMaxEnclosure;
     private ArrayList<Enclosure> listOfEnclosure = new ArrayList<Enclosure>();
+    private static Zoo _instance;
 
     public Clock clock = new Clock();
 
@@ -45,6 +45,12 @@ public class Zoo {
 
     }
 
+    public static Zoo getInstance() {
+        if (_instance == null) {
+            _instance = new Zoo();
+        }
+        return _instance;
+    }
 
     /**
      * @return the name
@@ -110,7 +116,6 @@ public class Zoo {
     }
 
 
-
     public int printNbAnimals() {
         int nbTotal = 0;
         for (Enclosure e : this.listOfEnclosure) {
@@ -126,22 +131,22 @@ public class Zoo {
         }
     }
 
-    public void makePreset(){
+    public void makePreset() {
         System.out.println("preset");
         RandomName r = new RandomName();
 
         this.setNbMaxEnclosure(3);
         Enclosure savane = new Default_enclosure("Savane", 30, 5);
-        Aquarium lagon = new Aquarium("Lagon", 100,4);
-        Aviary canyon = new Aviary("Canyon", 40,4);
+        Aquarium lagon = new Aquarium("Lagon", 100, 4);
+        Aviary canyon = new Aviary("Canyon", 40, 4);
 
         savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9, false, false, false));
-        lagon.addAnimal( new Whale(r.getFemaleName(), Gender.F, 100,500, 15.6, false, true, false));
-        savane.addAnimal( new Wolf(r.getFemaleName(), Gender.F,20,20,10,false,false,false));
-        lagon.addAnimal( new Shark(r.getMaleName(), Gender.M, 120, 9, .9, false, false, false));
-        lagon.addAnimal( new Fish(r.getFemaleName(), Gender.F, 100,500, 15.6, false, true, false));
-        canyon.addAnimal( new Auk(r.getMaleName(), Gender.M,20,20,10,false,false,false));
-        canyon.addAnimal( new Eagle(r.getFemaleName(), Gender.F,20,20,10,false,false,false));
+        lagon.addAnimal(new Whale(r.getFemaleName(), Gender.F, 100, 500, 15.6, false, true, false));
+        savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10, false, false, false));
+        lagon.addAnimal(new Shark(r.getMaleName(), Gender.M, 120, 9, .9, false, false, false));
+        lagon.addAnimal(new Fish(r.getFemaleName(), Gender.F, 100, 500, 15.6, false, true, false));
+        canyon.addAnimal(new Auk(r.getMaleName(), Gender.M, 20, 20, 10, false, false, false));
+        canyon.addAnimal(new Eagle(r.getFemaleName(), Gender.F, 20, 20, 10, false, false, false));
         savane.addAnimal(new Bear(r.getMaleName(), Gender.M, 100, 10, 2, false, false, false));
 
         this.addEnclosure(savane);
@@ -151,12 +156,76 @@ public class Zoo {
 
     }
 
-    public void makeCustom(){
+    public void makeCustom() {
         System.out.println("custom");
 
     }
 
-    public void startGame () {
+    public void promptUserGeneral() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Que voulez-vous faire ? Vous occuper des animaux (1) ? Vous occuper des enclos ? (2)");
+
+        int rep = scanner.nextInt();
+        switch (rep) {
+            case 1:
+                promptUserAnimals();
+                break;
+            case 2:
+                promptUserEnclosure();
+                break;
+            default:
+                System.out.println("Animaux (1) ou enclos (2)");
+        }
+    }
+
+    public void promptUserEnclosure() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Voulez-vous vous occuper des enclos (nettoyage..) (1) ou bien en créer (2) ?");
+
+        int rep = scanner.nextInt();
+        switch (rep) {
+            case 1:
+                promptEnclosureEdit();
+                break;
+            case 2:
+                promptEnclosureNew();
+                break;
+        }
+    }
+
+    private void promptEnclosureNew() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Voulez vous créer une volière (v)?  Un Aquarium (a)? Un enclos terrestre (t)?");
+        String rep = scanner.next();
+
+        switch (rep.charAt(0)){
+            case 'v':
+                System.out.println("voliere");
+                break;
+            case 'a':
+                break;
+            case 't':
+                break;
+            default:
+
+        }
+    }
+
+    private void promptEnclosureEdit() {
+
+    }
+
+    public void promptUserAnimals() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Voulez-vous vous occuper des animaux (soin, nourriture..) (1) ou bien en ajouter (2) ?");
+
+        int rep = scanner.nextInt();
+    }
+
+    public void startGame() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bonjour, vous avez lancé une nouvelle partie de Zootopia ! " +
@@ -166,7 +235,7 @@ public class Zoo {
         int age = scanner.nextInt();
         System.out.println("Quel est ton genre (M/F)?");
         String genre = scanner.next();
-        Employee user = new Employee(name, EmployeeGender.valueOf(genre) , age);
+        Employee user = new Employee(name, EmployeeGender.valueOf(genre), age);
         this.setEmployee(user);
         System.out.println("Voulez-vous utiliser un preset défini (1) ou bien créer votre propre zoo (2)?");
         int reponseGame = scanner.nextInt();
@@ -179,74 +248,16 @@ public class Zoo {
     }
 
     public static void main(String[] args) {
-		/*
-		Employee michel = new Employee("Michel", EmployeeGender.M, 50);
-		Zoo zootopia = new Zoo("Zootopia", michel, 20, new ArrayList<Enclosure>());
-		Enclosure e1 = new Default_enclosure("Enclos 1", 30, 5);
-		Enclosure e2 = new Default_enclosure("Enclos 2", 30, 5);
-		Aquarium a1 = new Aquarium("Aquarium 1", 50,2);
-		Animal bear = new Bear("bear", Gender.M, 100, 10, 2, false, false, false);
-		Animal tiger = new Tiger("tiger", Gender.F, 120, 9, .9, false, false, false);
-		Whale whale=new Whale("bleue", Gender.F, 100,500, 15.6, false, true, false);
-		Wolf wolf= new Wolf("loup", Gender.F,20,20,10,false,false,false);
 
-		zootopia.addEnclosure(e1);
-		zootopia.addEnclosure(e2);
-		zootopia.addEnclosure(a1);
-
-		e1.addAnimal(bear);
-		e1.addAnimal(tiger);
-		e2.addAnimal(wolf);
-		a1.addAnimal(whale);
-		michel.toExaminate(e1);
-
-		zootopia.printNbAnimals();
-		zootopia.printAnimals();
-
-        //TODO Faire prompt - Preset zoo/zoo custom - thread event random
-
-        Zoo zootopia = new Zoo();
-
-        Enclosure e1 = new Default_enclosure("Enclos 1", 30, 5);
-        Animal bear = new Bear("bear", Gender.M, 100, 10, 2, false, false, false);
-
-        zootopia.addEnclosure(e1);
-        e1.addAnimal(bear);
-
-//		zootopia.clock.start();
-
-        Timer timer = new Timer();
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (zootopia.printNbAnimals() == 3) {
-                    System.out.println("oui");
-                    timer.cancel();
-                } else {
-                    System.out.println("non");
-                }
-            }
-        };
-
-        timer.scheduleAtFixedRate(task, 1000, 1000);
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*
-        // TODO : Create preset game
         // TODO : User scanner
-        // TODO : Lunch game
+        // TODO : Launch game
         // TODO : Runnable Employee, Animal, Enclosure
 
-        e1.addAnimal(bear);
-        e1.addAnimal(bear); */
 
-        Zoo zootopia = new Zoo();
-        zootopia.startGame();
-        zootopia.printAnimals();
+        Simulator Game = new Simulator();
+        Thread t1 = new Thread(Game);
+        t1.start();
+
 
     }
 

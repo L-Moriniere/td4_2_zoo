@@ -3,20 +3,40 @@
  */
 package employee;
 
-import java.util.ArrayList;
-
 import animal.Animal;
 import enclosure.Enclosure;
+import zoo.Zoo;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author logan
  *
  */
-public class Employee {
+public class Employee implements Runnable {
 	
 	private String name;
 	private EmployeeGender gender;
 	private int age;
+
+	public void run(){
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Que voulez-vous faire ? Vous occuper des animaux (1) ? Vous occuper des enclos ? (2)");
+
+		int rep = scanner.nextInt();
+		switch (rep) {
+			case 1:
+				Zoo.getInstance().promptUserAnimals();
+				break;
+			case 2:
+				Zoo.getInstance().promptUserEnclosure();
+				break;
+			default:
+				System.out.println("Animaux (1) ou enclos (2)");
+		}
+	}
 
 	/**
 	 * 
