@@ -27,7 +27,7 @@ public class Employee {
 
 	/**
 	 * @param name
-	 * @param m
+	 * @param gender
 	 * @param age
 	 */
 	public Employee(String name, EmployeeGender gender, int age) {
@@ -77,7 +77,16 @@ public class Employee {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"name='" + name + '\'' +
+				", gender=" + gender +
+				", age=" + age +
+				'}';
+	}
+
 	public void toExaminate(Enclosure e) {
 		System.out.println(e.toString());
 	}
