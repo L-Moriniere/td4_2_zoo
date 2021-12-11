@@ -2,10 +2,11 @@
  * 
  */
 package enclosure;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 import animal.Animal;
+
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * @author logan
@@ -20,7 +21,7 @@ public class Default_enclosure extends Enclosure {
 	 * @param nb_max
 	 */
 	public Default_enclosure(String name, double area, int nb_max) {
-		super(name, area, nb_max, 0,new ArrayList<Animal>() , null);
+		super(name, area, nb_max, 0,new ArrayList<Animal>() , Cleanness.GOOD);
 		// TODO Auto-generated constructor stub
 	}
 

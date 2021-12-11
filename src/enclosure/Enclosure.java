@@ -2,10 +2,11 @@
  * 
  */
 package enclosure;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 import animal.Animal;
+
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * @author logan
@@ -19,6 +20,12 @@ public abstract class Enclosure {
 	private int nb_max = 1, nb_animal = 0;
 	private ArrayList<Animal> listOfAnimal = new ArrayList<Animal>();
 	private Cleanness cleanness = Cleanness.GOOD;
+
+	public static final String GREEN = "\u001B[32m";
+	public static final String RED = "\u001B[31m";
+	public static final String PURPLE = "\u001B[35m";
+	public static final String WHITE = "\u001B[37m";
+	public static final String RESET = "\u001B[0m";
 	
 	
 	
@@ -129,7 +136,17 @@ public abstract class Enclosure {
 	
 	public String toString() {
 		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal
-				+ "\n\t listOfAnimal=" + listOfAnimal + "\t cleanness=" + cleanness+"\n\n";
+				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
+	}
+
+	public String toString(double height) {
+		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t height=" + height
+				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
+	}
+
+	public String toString(double salinity, double depth) {
+		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t salinity=" + salinity+ "\t depth=" + depth
+				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
 
 	/**

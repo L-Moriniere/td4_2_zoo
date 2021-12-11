@@ -24,8 +24,8 @@ public class Simulator extends TimerTask {
             mSecondsPassed++;
             if (mSecondsPassed > 5){
                 
-                Thread t1 = new Thread(Zoo.getInstance().getEmployee());
-                t1.start();
+               // Thread t1 = new Thread(Zoo.getInstance().getEmployee());
+                //t1.start();
                 
                 // clear le TIMER
 //                mTimer.cancel();

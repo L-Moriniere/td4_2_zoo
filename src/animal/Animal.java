@@ -14,6 +14,12 @@ public abstract class Animal {
 	private int weight, age, pregnancy;
 	private double size;
 	private boolean isHungry, isSick, isSleeping;
+
+	public static final String GREEN = "\u001B[32m";
+	public static final String RED = "\u001B[31m";
+	public static final String PURPLE = "\u001B[35m";
+	public static final String WHITE = "\u001B[37m";
+	public static final String RESET = "\u001B[0m";
 	
 	/**
 	 * 
@@ -254,8 +260,32 @@ public abstract class Animal {
 
 	@Override
 	public String toString() {
-		return "\nNom: " + specie + "\t gender=" + gender + "\t weight=" + weight + "\t age=" + age + "\t size="
-				+ size + "\t isHungry=" + isHungry + "\t isSick=" + isSick + "\t isSleeping=" + isSleeping ;
+		String hungry, sick, sleep;
+
+		if (isHungry) {
+			 hungry = RED+"true"+RESET;
+		} else {
+			 hungry = GREEN+"false"+RESET;
+		}
+
+		if (isSick) {
+			 sick = RED+"true"+RESET;
+		} else {
+			 sick = GREEN+"false"+RESET;
+		}
+
+		if (isSleeping) {
+			 sleep = RED+"true"+RESET;
+		} else {
+			 sleep = GREEN+"false"+RESET;
+		}
+
+
+
+
+
+		return "\n"+ this.getClass().getSimpleName()+" -- Nom: " + specie + "\t gender=" + gender + "\t weight=" + weight + "\t age=" + age + "\t size="
+				+ size + "\t isHungry=" + hungry + "\t isSick=" + sick + "\t isSleeping=" + sleep ;
 	}
 
 	
