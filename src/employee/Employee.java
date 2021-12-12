@@ -27,14 +27,24 @@ public class Employee implements Runnable {
 
 		int rep = scanner.nextInt();
 		switch (rep) {
-			case 1:
-				Zoo.getInstance().promptUserAnimals();
-				break;
-			case 2:
+			case 1 -> {
+				System.out.println("case 1");
+				System.out.println("Voulez-vous vous occuper des animaux (soin, nourriture..) (1) ou bien en ajouter (2) ?");
+				rep = scanner.nextInt();
+				switch (rep){
+					case 1 -> {
+						System.out.println("[1] Soin");
+					}
+					case 2 -> {
+						System.out.println("[2] Nourrir");
+					}
+				}
+			}
+			case 2 -> {
+				System.out.println("case 2");
 				Zoo.getInstance().promptUserEnclosure();
-				break;
-			default:
-				System.out.println("Animaux (1) ou enclos (2)");
+			}
+			default -> System.out.println("Animaux (1) ou enclos (2)");
 		}
 	}
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author logan
+ * @author Logan & Lorenzo
  */
 public class Zoo {
 
@@ -30,7 +30,6 @@ public class Zoo {
     public Zoo() {
         // TODO Auto-generated constructor stub
     }
-
 
     /**
      * @param name
@@ -200,7 +199,7 @@ public class Zoo {
         System.out.println("Voulez vous créer une volière (v)?  Un Aquarium (a)? Un enclos terrestre (t)?");
         String rep = scanner.next();
 
-        switch (rep.charAt(0)){
+        switch (rep.charAt(0)) {
             case 'v':
                 System.out.println("voliere");
                 break;
@@ -220,7 +219,7 @@ public class Zoo {
     public void promptUserAnimals() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Voulez-vous vous occuper des animaux (soin, nourriture..) (1) ou bien en ajouter (2) ?");
+
 
         int rep = scanner.nextInt();
     }
@@ -257,8 +256,6 @@ public class Zoo {
         Simulator Game = new Simulator();
         Thread t1 = new Thread(Game);
         t1.start();
-
-
     }
 
 
