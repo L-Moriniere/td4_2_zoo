@@ -1,14 +1,12 @@
-/**
- * 
- */
+
 package animal;
 
 /**
  * @author logan
- *
+ * Interface peut vagabonder
  */
 public interface CanVagabound {
 	
-	public void toVagabound();
+	void toVagabound();
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package enclosure;
 
 import animal.Animal;
@@ -10,25 +7,26 @@ import java.util.ArrayList;
 
 /**
  * @author logan
- *
+ * Classe Volière étend d'Enclos
  */
 public class Aviary extends Enclosure {
 	
 	private double height;
 
-	
-	
 	/**
+	 * Autre paramètres
+	 * Liste d'animaux vide
+	 * Propreté= Good
 	 * @param name
+	 * String name
 	 * @param area
+	 * double area
 	 * @param nb_max
+	 * int nb_max
+	 * @param height
+	 * double hauteur
+	 *
 	 */
-	public Aviary(String name, double area, int nb_max) {
-		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
-		// TODO Auto-generated constructor stub
-	}
-
-
 	public Aviary(String name, double area, int nb_max,  double height) {
 		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
 		this.height = height;
@@ -52,34 +50,42 @@ public class Aviary extends Enclosure {
 	}
 
 
+	/**
+	 * @return toString
+	 */
 	@Override
 	public String toString() {
 		return super.toString(this.getHeight());
 	}
 
 
+	/**
+	 * Permet d'ajouter un animal
+	 * @param a
+	 * Animal à ajouter
+	 */
 	@Override
-	public boolean addAnimal(Animal a) {
+	public void addAnimal(Animal a) {
 		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanFly)
 			{
 				this.getListOfAnimal().add(a);
 				this.setNb_animal(this.getNb_animal()+1);
 				System.out.println(a.getClass().getSimpleName()+" ajouté");
-				return true;
 			}
 			else {
 				System.out.println("Ce n'est pas un oiseau");
-				return false;
 			}
 		}else {
 			System.out.println("L'enclos est plein !");				
-			return false;
-		}	
+		}
 		
 		
 	}
 
+	/**
+	 * Permet de nettoyer l'enclos
+	 */
 	@Override
 	public void toClean() {
 		if (this.getListOfAnimal().isEmpty())

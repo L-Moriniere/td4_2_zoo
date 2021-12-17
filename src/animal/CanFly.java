@@ -1,14 +1,12 @@
-/**
- * 
- */
+
 package animal;
 
 /**
  * @author logan
- *
+ * Interface peut voler
  */
 public interface CanFly {
 	
-	public void toFly();
+	void toFly();
 
 }

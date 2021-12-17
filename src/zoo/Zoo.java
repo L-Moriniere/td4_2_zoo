@@ -31,7 +31,7 @@ public class Zoo {
     public Clock clock = new Clock();
 
     /**
-     *
+     * Constructeur vide
      */
     public Zoo() {
         // TODO Auto-generated constructor stub
@@ -39,9 +39,13 @@ public class Zoo {
 
 
     /**
+     * Constructeur
      * @param name
+     * String name
      * @param employee
+     * Employé du zoo
      * @param nbMaxEnclosure
+     * Nombre max d'enclos
      */
     public Zoo(String name, Employee employee, int nbMaxEnclosure) {
         super();
@@ -51,6 +55,9 @@ public class Zoo {
 
     }
 
+    /**
+     * @return instance of Zoo
+     */
     public static Zoo getInstance() {
         if (_instance == null) {
             _instance = new Zoo();
@@ -114,19 +121,31 @@ public class Zoo {
         this.listOfEnclosure = listOfEnclosure;
     }
 
-    public void addEnclosure(Enclosure e) {
+    /**
+     * Ajout d'un enclos au zoo
+     * @param enclosure
+     * enclos à ajouter
+     */
+    public void addEnclosure(Enclosure enclosure) {
         if (this.getListOfEnclosure().size() < this.getNbMaxEnclosure()) {
-            this.getListOfEnclosure().add(e);
-            System.out.println("Enclos " + e.getName() + " ajouté au zoo");
+            this.getListOfEnclosure().add(enclosure);
+            System.out.println("Enclos " + enclosure.getName() + " ajouté au zoo");
         }
         else System.out.println("Le zoo a trop d'enclos");
     }
 
+    /**
+     * Affiche les enclos avec leur index
+     */
     public void printEnclosure() {
         for (Enclosure enclosure : listOfEnclosure)
             System.out.println((listOfEnclosure.indexOf(enclosure) + 1) + ". " + enclosure);
     }
 
+    /**
+     * @return int
+     * Nombre d'animaux dans le zoo
+     */
     public int printNbAnimals() {
         int nbTotal = 0;
         for (Enclosure e : this.getListOfEnclosure()) {
@@ -136,20 +155,26 @@ public class Zoo {
         return nbTotal;
     }
 
+    /**
+     * Affiche les animaux du zoo
+     */
     public void printAnimals() {
         for (Enclosure e : this.getListOfEnclosure()) {
             System.out.println(e.getName() + " -- " + e.getListOfAnimal());
         }
     }
 
+    /**
+     * Faire un zoo prédéfini
+     */
     public void makePreset() {
         System.out.println("preset");
         RandomName r = new RandomName();
 
         this.setNbMaxEnclosure(3);
         Enclosure savane = new Default_enclosure("Savane", 30, 5);
-        Aquarium lagon = new Aquarium("Lagon", 100, 4);
-        Aviary canyon = new Aviary("Canyon", 40, 4);
+        Aquarium lagon = new Aquarium("Lagon", 100, 4, 20);
+        Aviary canyon = new Aviary("Canyon", 40, 4, 20.5);
 
         savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9));
         lagon.addAnimal(new Whale(r.getFemaleName(), Gender.F, 100, 500, 15.6));
@@ -167,6 +192,9 @@ public class Zoo {
 
     }
 
+    /**
+     * Faire un zoo customisé
+     */
     public void makeCustom() {
         System.out.println("""
                 Que voulez vous faire ?\s
@@ -196,6 +224,9 @@ public class Zoo {
         promptEnclosureNew();
     }
 
+    /**
+     * Prompt général
+     */
     public void promptUserGeneral() {
         Scanner scanner = new Scanner(System.in);
 
@@ -209,6 +240,9 @@ public class Zoo {
         }
     }
 
+    /**
+     * Prompt pour les enclos
+     */
     public void promptUserEnclosure() {
         Scanner scanner = new Scanner(System.in);
 
@@ -224,6 +258,9 @@ public class Zoo {
         promptUserGeneral();
     }
 
+    /**
+     * Prompt ajouter un enclos
+     */
     public void promptEnclosureNew() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Voulez vous créer une volière (v)?  Un Aquarium (a)? Un enclos terrestre (t)?");
@@ -272,6 +309,9 @@ public class Zoo {
 
     }
 
+    /**
+     * Prompt gérer les enclos
+     */
     public void promptEnclosureManage() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
@@ -334,6 +374,9 @@ public class Zoo {
         promptUserGeneral();
     }
 
+    /**
+     * Prompt menu animaux
+     */
     public void promptUserAnimals() {
         Scanner scanner = new Scanner(System.in);
 
@@ -352,6 +395,9 @@ public class Zoo {
         promptUserGeneral();
     }
 
+    /**
+     * Prompt gérer les animaux
+     */
     private void promptAnimalManage() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
@@ -396,6 +442,9 @@ public class Zoo {
     }
 
 
+    /**
+     * Prompt ajouter un animal
+     */
     public void promptAddAnimal() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Dans quel enclos voulez vous ajouter l'animal (index)? ");
@@ -528,6 +577,9 @@ public class Zoo {
         }
     }
 
+    /**
+     * Lancer la simulation
+     */
     public void startGame() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(PURPLE + "Bonjour, vous avez lancé une nouvelle partie de Zootopia ! " +

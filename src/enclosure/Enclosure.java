@@ -1,12 +1,9 @@
-/**
- * 
- */
+
 package enclosure;
 
 import animal.Animal;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * @author logan
@@ -40,11 +37,17 @@ public abstract class Enclosure {
 
 	/**
 	 * @param name
+	 * String name
 	 * @param area
+	 * double surface
 	 * @param nb_max
+	 * int nb_max
 	 * @param nb_animal
+	 * int nb_animal
 	 * @param listOfAnimal
+	 * ArrayList liste des animaux
 	 * @param cleanness
+	 * Enum prporeté
 	 */
 	public Enclosure(String name, double area, int nb_max, int nb_animal, ArrayList<Animal> listOfAnimal,
 			Cleanness cleanness) {
@@ -134,17 +137,33 @@ public abstract class Enclosure {
 		this.cleanness = cleanness;
 	}
 
-	
+
+	/**
+	 * @return toString enclos terrestre
+	 */
 	public String toString() {
 		return "\n"+BLUE+name +RESET +": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
 
+	/**
+	 * @param height
+	 * double hauteur
+	 * @return toString volière
+	 *
+	 */
 	public String toString(double height) {
 		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t height=" + height
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
 
+	/**
+	 * @param salinity
+	 * double salinité
+	 * @param depth
+	 * double profondeur
+	 * @return toString aquarium
+	 */
 	public String toString(double salinity, double depth) {
 		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t salinity=" + salinity+ "\t depth=" + depth
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
@@ -153,29 +172,41 @@ public abstract class Enclosure {
 
 
 	/**
-	 * Function to implement
+	 * Ajouter un animal
 	 * @param a
-	 * @return 
+	 * Animal à ajouter
+     */
+	public abstract void addAnimal(Animal a);
+
+	/**
+	 * Retirer un animal de l'enclos
+	 * @param a
+	 * Animal à retirer
 	 */
-	public abstract boolean addAnimal(Animal a);
-	
 	public void removeAnimal(Animal a) {
 		this.listOfAnimal.remove(a);
 		System.out.println(a.getClass().getSimpleName()+" enlevé");
 	};
 
+	/**
+	 * Permet d'afficher les animaux avec leur index
+	 */
 	public void printAnimals() {
 		for (Animal animal : listOfAnimal)
 			System.out.println((listOfAnimal.indexOf(animal) + 1) + ". " + animal);
 	}
 
 
+	/**
+	 * Nourrir otus les animaux d'un enclos
+	 */
 	public void feedAllAnimals() {
-		
-		ListIterator<Animal> li = this.getListOfAnimal().listIterator();
-		while (li.hasNext())
-			li.next().toFeed();
+
+		for (Animal animal : this.getListOfAnimal()) animal.toFeed();
 	};
-	
+
+	/**
+	 * Fonction abstraite pour nettoyer un enclos
+	 */
 	public abstract void toClean();
 }

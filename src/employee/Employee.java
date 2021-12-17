@@ -1,54 +1,26 @@
-/**
- * 
- */
 package employee;
 
 import animal.Animal;
 import enclosure.Enclosure;
-import zoo.Zoo;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * @author logan
- *
+ * Classe employée qui implémente Runnable
  */
-public class Employee implements Runnable {
+public class Employee {
 	
 	private String name;
 	private EmployeeGender gender;
 	private int age;
-
-	public void run(){
-		Scanner scanner = new Scanner(System.in);
-
-		System.out.println("Que voulez-vous faire ? Vous occuper des animaux (1) ? Vous occuper des enclos ? (2)");
-
-		int rep = scanner.nextInt();
-		switch (rep) {
-			case 1:
-				Zoo.getInstance().promptUserAnimals();
-				break;
-			case 2:
-				Zoo.getInstance().promptUserEnclosure();
-				break;
-			default:
-				System.out.println("Animaux (1) ou enclos (2)");
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @param name
+	 * String nom
 	 * @param gender
+	 * Enum genre
 	 * @param age
+	 * int age
 	 */
 	public Employee(String name, EmployeeGender gender, int age) {
 		this.name = name;
@@ -107,18 +79,42 @@ public class Employee implements Runnable {
 				'}';
 	}
 
-	public void toExaminate(Enclosure e) {
-		System.out.println(e.toString());
+	/**
+	 * Permet d'examiner tous les enclos
+	 * @param enclosure
+	 * Enclos
+	 */
+	public void toExaminate(Enclosure enclosure) {
+		System.out.println(enclosure.toString());
 	}
-	
-	public void toClean(Enclosure e) {
-		e.toClean();
+
+	/**
+	 * Permet de nettoyer les enclos
+	 * @param enclosure
+	 * enclos
+	 */
+	public void toClean(Enclosure enclosure) {
+		enclosure.toClean();
 	}
-	
-	public void toFeed(Enclosure e) {
-		e.feedAllAnimals();
+
+	/**
+	 * Permet de nourrir tous les animaux d'un enclos
+	 * @param enclosure
+	 * Enclos
+	 */
+	public void toFeed(Enclosure enclosure) {
+		enclosure.feedAllAnimals();
 	}
-	
+
+	/**
+	 * Permet de transferer un animal d'un enclos à un autre
+	 * @param from
+	 * Enclos qui contient l'animal à tranferer
+	 * @param a
+	 * Animal à transferer
+	 * @param to
+	 * Enclos qui va recevoir l'animal
+	 */
 	public void toTransfer(Enclosure from, Animal a, Enclosure to ) {
 		
 		if (from.getListOfAnimal().contains(a)) {
