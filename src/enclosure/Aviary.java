@@ -3,10 +3,10 @@
  */
 package enclosure;
 
-import java.util.ArrayList;
-
 import animal.Animal;
 import animal.CanFly;
+
+import java.util.ArrayList;
 
 /**
  * @author logan
@@ -22,16 +22,17 @@ public class Aviary extends Enclosure {
 	 * @param name
 	 * @param area
 	 * @param nb_max
-	 * @param nb_animal
-	 * @param listOfAnimal
-	 * @param cleanness
 	 */
 	public Aviary(String name, double area, int nb_max) {
-		super(name, area, nb_max, 0, new ArrayList<Animal>(), null);
+		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
+	public Aviary(String name, double area, int nb_max,  double height) {
+		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
+		this.height = height;
+	}
 
 	/**
 	 * @return the height
@@ -53,14 +54,13 @@ public class Aviary extends Enclosure {
 
 	@Override
 	public String toString() {
-		return super.toString()
-				+ ", height=" + this.getHeight() + "]";
+		return super.toString(this.getHeight());
 	}
 
 
 	@Override
 	public boolean addAnimal(Animal a) {
-		if(this.getNb_max() >= this.getNb_animal()) {			
+		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanFly)
 			{
 				this.getListOfAnimal().add(a);
@@ -69,7 +69,7 @@ public class Aviary extends Enclosure {
 				return true;
 			}
 			else {
-				System.out.println("Ce n'est pas un poisson");
+				System.out.println("Ce n'est pas un oiseau");
 				return false;
 			}
 		}else {

@@ -36,9 +36,8 @@ public class Tiger extends Animal implements CanVagabound, Mammal {
 	 * @param isSick
 	 * @param isSleeping
 	 */
-	public Tiger(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 104);
+	public Tiger(String specie, Gender gender, int weight, int age, double size) {
+		super(specie, gender, weight, age, size, false, false, false, 2);
 		// TODO Auto-generated constructor stub
 	}
 

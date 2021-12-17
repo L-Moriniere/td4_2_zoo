@@ -24,13 +24,9 @@ public class Wolf extends Animal implements CanVagabound, Mammal {
 	 * @param weight
 	 * @param age
 	 * @param size
-	 * @param isHungry
-	 * @param isSick
-	 * @param isSleeping
 	 */
-	public Wolf(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping,60);
+	public Wolf(String specie, Gender gender, int weight, int age, double size) {
+		super(specie, gender, weight, age, size,false, false, false,2);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -3,9 +3,10 @@
  */
 package enclosure;
 
-import java.util.ArrayList;
 import animal.Animal;
 import animal.CanSwim;
+
+import java.util.ArrayList;
 
 /**
  * @author logan
@@ -27,11 +28,16 @@ public class Aquarium extends Enclosure {
 	 * @param cleanness
 	 */
 	public Aquarium(String name, double area, int nb_max) {
-		super(name, area, nb_max, 0, new ArrayList<Animal>(), null);
+		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public Aquarium(String name, double area, int nb_max,  double depth) {
+		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
+		this.depth = depth;
+		this.salinity = 50.0 ;
+	}
+
 	/**
 	 * @return the depth
 	 */
@@ -70,13 +76,13 @@ public class Aquarium extends Enclosure {
 
 	@Override
 	public String toString() {
-		return super.toString()+ ", depth=" + this.getDepth() + ", salinity=" + this.getSalinity() + "]";
+		return super.toString(this.getDepth(), this.getSalinity());
 	}
 
 
 	@Override
 	public boolean addAnimal(Animal a) {
-		if(this.getNb_max() >= this.getNb_animal()) {			
+		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanSwim)
 			{
 				this.getListOfAnimal().add(a);
