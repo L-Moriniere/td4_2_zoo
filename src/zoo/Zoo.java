@@ -164,6 +164,31 @@ public class Zoo {
         }
     }
 
+    public boolean compareNbAnimal(Enclosure e1, Enclosure e2){
+        return e1.getNb_animal() >= e2.getNb_animal();
+    }
+
+    public void printSortedEnclosure(){
+
+        ArrayList<Enclosure> listSortedEnclosure = new ArrayList<>(this.getListOfEnclosure());
+
+        int size = this.getListOfEnclosure().size();
+
+        for (int i =1; i < size; i++){
+            Enclosure current = this.getListOfEnclosure().get(i);
+
+            int j = i-1;
+
+            while ((j > -1 ) && (compareNbAnimal(this.getListOfEnclosure().get(j), current))){
+                listSortedEnclosure.set(j+1, listSortedEnclosure.get((j)));
+                j--;
+            }
+            listSortedEnclosure.set(j+1, current);
+        }
+
+        System.out.println(listSortedEnclosure);
+    }
+
     /**
      * Faire un zoo prédéfini
      */
@@ -176,9 +201,9 @@ public class Zoo {
         Aquarium lagon = new Aquarium("Lagon", 100, 4, 20);
         Aviary canyon = new Aviary("Canyon", 40, 4, 20.5);
 
-        savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9));
+//        savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9));
         lagon.addAnimal(new Whale(r.getFemaleName(), Gender.F, 100, 500, 15.6));
-        savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10));
+//        savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10));
         lagon.addAnimal(new Shark(r.getMaleName(), Gender.M, 120, 9, .9));
         lagon.addAnimal(new Fish(r.getFemaleName(), Gender.F, 100, 500, 15.6));
         canyon.addAnimal(new Auk(r.getMaleName(), Gender.M, 20, 20, 10));
@@ -188,6 +213,7 @@ public class Zoo {
         this.addEnclosure(savane);
         this.addEnclosure(lagon);
         this.addEnclosure(canyon);
+        this.printSortedEnclosure();
 
 
     }

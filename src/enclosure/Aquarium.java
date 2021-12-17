@@ -84,9 +84,10 @@ public class Aquarium extends Enclosure {
 	/**
 	 * @param a
 	 * Animal à ajouter
+	 * @return
 	 */
 	@Override
-	public void addAnimal(Animal a) {
+	public boolean addAnimal(Animal a) {
 		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanSwim)
 			{
@@ -100,6 +101,7 @@ public class Aquarium extends Enclosure {
 		}else {
 			System.out.println("L'enclos est plein !");
 		}
+		return false;
 	}
 
 	/**

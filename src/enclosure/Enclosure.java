@@ -175,8 +175,9 @@ public abstract class Enclosure {
 	 * Ajouter un animal
 	 * @param a
 	 * Animal à ajouter
-     */
-	public abstract void addAnimal(Animal a);
+	 * @return
+	 */
+	public abstract boolean addAnimal(Animal a);
 
 	/**
 	 * Retirer un animal de l'enclos

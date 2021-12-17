@@ -30,9 +30,10 @@ public class Default_enclosure extends Enclosure {
 	 * Permet d'ajouter un animal
 	 * @param a
 	 * Animal à ajouter
+	 * @return
 	 */
 	@Override
-	public void addAnimal(Animal a) {
+	public boolean addAnimal(Animal a) {
 		if(this.getNb_max() > this.getNb_animal()) {
 			this.getListOfAnimal().add(a);
 			this.setNb_animal(this.getNb_animal() + 1);
@@ -40,6 +41,7 @@ public class Default_enclosure extends Enclosure {
 		}else {
 			System.out.println("L'enclos est plein !");
 		}
+		return false;
 	}
 
 
