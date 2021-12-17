@@ -202,13 +202,13 @@ public abstract class Animal {
 	/**
 	 * make an animal to eat
 	 */
-	public void toEat() {
+	public void toFeed() {
 		if (!this.isSleeping() && this.isHungry()) {
 			this.setHungry(false);
-			System.out.println(this.animalSays()+"It was some good fucking food");
+			System.out.println(this.animalSays()+"Miam miam");
 		}
 		else
-			System.out.println(this.animalSays()+"I'm not hungry");
+			System.out.println(this.animalSays()+"Je n'ai pas faim");
 	}
 	
 	
@@ -221,8 +221,11 @@ public abstract class Animal {
 	 * make an animal to get healed
 	 */
 	public void toHeal() {
-		this.setSick(false);
-		System.out.println(this.animalSays()+"Thank you master");
+		if (this.isSick) {
+			this.setSick(false);
+			System.out.println(this.animalSays() + "Merci maître");
+		}
+		else System.out.println("Je suis déjà en pleine forme");
 	}
 	
 	
@@ -233,10 +236,10 @@ public abstract class Animal {
 		if (this.isSleeping())
 		{
 			this.setSleeping(false);
-			System.out.println(this.animalSays()+"I wake up");
+			System.out.println(this.animalSays()+"Je me réveille");
 		}
 		else
-			System.out.println(this.animalSays()+"I'm awake");
+			System.out.println(this.animalSays()+"Je vais dormir");
 			
 	}
 	
@@ -247,10 +250,10 @@ public abstract class Animal {
 		if (!this.isSleeping())
 		{
 			this.setSleeping(true);
-			System.out.println(this.animalSays()+"I sleep");
+			System.out.println(this.animalSays()+"Je dors");
 		}
 		else
-			System.out.println(this.animalSays()+"I'm sleeping");
+			System.out.println(this.animalSays()+"zzzzzzzzzzzzzzzzzzzzzz");
 			
 	}
 

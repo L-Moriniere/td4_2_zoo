@@ -27,7 +27,7 @@ public class Default_enclosure extends Enclosure {
 
 	@Override
 	public boolean addAnimal(Animal a) {
-		if(this.getNb_max() >= this.getNb_animal()) {			
+		if(this.getNb_max() > this.getNb_animal()) {
 			this.getListOfAnimal().add(a);
 			this.setNb_animal(this.getNb_animal() + 1);
 			System.out.println(a.getSpecie()+" ajouté");
@@ -51,7 +51,7 @@ public class Default_enclosure extends Enclosure {
 		ListIterator<Animal> li = this.getListOfAnimal().listIterator();
 		
 		while (li.hasNext())
-			li.next().toEat();
+			li.next().toFeed();
 	}
 
 	@Override

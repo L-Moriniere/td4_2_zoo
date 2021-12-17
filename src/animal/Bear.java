@@ -29,9 +29,8 @@ public class Bear extends Animal implements Mammal {
 	 * @param isSick
 	 * @param isSleeping
 	 */
-	public Bear(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping,265);
+	public Bear(String specie, Gender gender, int weight, int age, double size) {
+		super(specie, gender, weight, age, size, false, false, false,3);
 		// TODO Auto-generated constructor stub
 	}
 

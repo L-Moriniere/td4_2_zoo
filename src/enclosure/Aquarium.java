@@ -82,7 +82,7 @@ public class Aquarium extends Enclosure {
 
 	@Override
 	public boolean addAnimal(Animal a) {
-		if(this.getNb_max() >= this.getNb_animal()) {			
+		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanSwim)
 			{
 				this.getListOfAnimal().add(a);

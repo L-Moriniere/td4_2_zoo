@@ -25,13 +25,9 @@ public class Eagle extends Animal implements Oviparous, CanFly {
 	 * @param weight
 	 * @param age
 	 * @param size
-	 * @param isHungry
-	 * @param isSick
-	 * @param isSleeping
 	 */
-	public Eagle(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping) {
-		super(specie, gender, weight, age, size, isHungry, isSick, isSleeping, 35);
+	public Eagle(String specie, Gender gender, int weight, int age, double size) {
+		super(specie, gender, weight, age, size, false, false, false, 1);
 	
 		// TODO Auto-generated constructor stub
 	}

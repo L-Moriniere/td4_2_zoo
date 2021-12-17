@@ -26,6 +26,7 @@ public abstract class Enclosure {
 	public static final String PURPLE = "\u001B[35m";
 	public static final String WHITE = "\u001B[37m";
 	public static final String RESET = "\u001B[0m";
+	public static final String BLUE = "\033[0;34m";
 	
 	
 	
@@ -135,38 +136,45 @@ public abstract class Enclosure {
 
 	
 	public String toString() {
-		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal
+		return "\n"+BLUE+name +RESET +": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
 
 	public String toString(double height) {
-		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t height=" + height
+		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t height=" + height
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
 
 	public String toString(double salinity, double depth) {
-		return "\n"+name + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t salinity=" + salinity+ "\t depth=" + depth
+		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t salinity=" + salinity+ "\t depth=" + depth
 				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
 	}
+
+
 
 	/**
 	 * Function to implement
 	 * @param a
 	 * @return 
 	 */
-	
 	public abstract boolean addAnimal(Animal a);
 	
 	public void removeAnimal(Animal a) {
 		this.listOfAnimal.remove(a);
 		System.out.println(a.getClass().getSimpleName()+" enlevé");
 	};
-	
+
+	public void printAnimals() {
+		for (Animal animal : listOfAnimal)
+			System.out.println((listOfAnimal.indexOf(animal) + 1) + ". " + animal);
+	}
+
+
 	public void feedAllAnimals() {
 		
 		ListIterator<Animal> li = this.getListOfAnimal().listIterator();
 		while (li.hasNext())
-			li.next().toEat();
+			li.next().toFeed();
 	};
 	
 	public abstract void toClean();

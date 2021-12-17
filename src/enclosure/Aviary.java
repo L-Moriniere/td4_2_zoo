@@ -60,7 +60,7 @@ public class Aviary extends Enclosure {
 
 	@Override
 	public boolean addAnimal(Animal a) {
-		if(this.getNb_max() >= this.getNb_animal()) {			
+		if(this.getNb_max() > this.getNb_animal()) {
 			if (a instanceof CanFly)
 			{
 				this.getListOfAnimal().add(a);
