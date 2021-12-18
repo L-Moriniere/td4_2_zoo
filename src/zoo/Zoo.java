@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author Logan & Lorenzo
+ * Class Zoo
  */
 public class Zoo {
 
@@ -163,10 +163,18 @@ public class Zoo {
         }
     }
 
+    /**
+     * @param e1 enclos 1
+     * @param e2 enclos 2
+     * @return boolen si nb animal de e1 est > à nb_animal d'e2
+     */
     public boolean compareNbAnimal(Enclosure e1, Enclosure e2){
         return e1.getNb_animal() >= e2.getNb_animal();
     }
 
+    /**
+     * Affiche les enclos triés par nb_animal
+     */
     public void printSortedEnclosure(){
 
         ArrayList<Enclosure> listSortedEnclosure = new ArrayList<>(this.getListOfEnclosure());
