@@ -84,12 +84,12 @@ public class Aviary extends Enclosure {
 			if (this.getCleanness() == Cleanness.BAD || this.getCleanness() == Cleanness.CORRECT)
 			{
 				this.setCleanness(Cleanness.GOOD);
-				System.out.println("The enclosure has been cleaned");
+				System.out.println("L'enclos a été nettoyée");
 			}
-			else System.out.println("The enclosure is already clean");
+			else System.out.println("L'enclos est déjà propre");
 		
 			System.out.println("hauteur de l'enclos " + this.getHeight());
-		}else System.out.println("\033[0;31m" + "You must empty the enclosure to clean it" + "\u001B[0m");
+		}else System.out.println("\033[0;31m" + "Vous devez vider l'enclos pour le nettoyer" + "\u001B[0m");
 	}
 
 

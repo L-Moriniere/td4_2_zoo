@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 public class Simulator implements Runnable {
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private Commands commandsList = new Commands();
     private int nbAction = 0;
     private int nbMaxAction = 3;
     private String prefix = "!";
@@ -17,7 +18,14 @@ public class Simulator implements Runnable {
     public static final String WHITE = "\u001B[37m";
     public static final String RESET = "\u001B[0m";
 
+    /**
+     * Cette methode est appelé au démarrage du Thread dans le main du Zoo
+     * Elle s'occupe de faire alterner entre une action aléatoire et le tour du joueur
+     */
     public void run() {
+        commandsList.help();
+        System.out.println("Tu as un total de " + GREEN + nbMaxAction + RESET + " action à toi de bien les utiliser :");
+
         while (true){
             randomAction();
             while (nbAction < nbMaxAction) {
@@ -28,7 +36,8 @@ public class Simulator implements Runnable {
     }
 
     private void userAction() {
-        System.out.println("Tu as un total de " + GREEN + (nbMaxAction - nbAction) + RESET + " action à toi de bien les utiliser :");
+        System.out.println(PURPLE + "Action restante : " + RESET +
+                (nbMaxAction - nbAction) + "/" + nbMaxAction);
         // Reading data using readLine
         try {
             String userInput = reader.readLine();
@@ -39,22 +48,15 @@ public class Simulator implements Runnable {
                 String[] command = userInput.substring(this.prefix.length()).split(" +");
                 String commandName = command[0].toLowerCase();
 
-                String[] args = new String[command.length - 1];
-
-                for (int i=1, k=0; i<command.length; i++){
-                    args[k++] = command[i];
-                }
-
-                Commands commandsList = new Commands();
-
                 switch (commandName) {
-                    case "feed" -> Action = commandsList.feed(args);
-                    case "clean" -> Action = commandsList.clean(args);
-                    case "addaviary" -> Action = commandsList.addAviary(args);
-                    case "addaquarium" -> Action = commandsList.addAquarium(args);
-                    case "addenclosure" -> Action = commandsList.addEnclosure(args);
+                    case "feed" -> Action = commandsList.feed();
+                    case "clean" -> Action = commandsList.clean();
+                    case "addenclosure" -> Action = commandsList.addEnclosure();
                     case "moveanimal" -> Action = commandsList.moveAnimal();
                     case "zoo" -> Action = commandsList.viewZoo();
+                    case "addanimal" -> Action = commandsList.addAnimal();
+                    case "heal" -> Action = commandsList.heal();
+                    case "wakeup" -> Action = commandsList.wakeUp();
                     case "leave" -> {
                         System.out.println("GoodBye");
                         System.exit(0);

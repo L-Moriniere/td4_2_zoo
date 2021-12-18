@@ -204,7 +204,7 @@ public abstract class Animal {
 			System.out.println(this.animalSays()+"Miam miam");
 		}
 		else
-			System.out.println(this.animalSays()+"Je n'ai pas faim");
+			System.out.println(this.animalSays()+ RED + "Je n'ai pas faim" + RESET);
 	}
 	
 	
@@ -221,7 +221,7 @@ public abstract class Animal {
 			this.setSick(false);
 			System.out.println(this.animalSays() + "Merci maître");
 		}
-		else System.out.println("Je suis déjà en pleine forme");
+		else System.out.println(RED +"Je suis déjà en pleine forme" + RESET);
 	}
 	
 	
@@ -235,7 +235,7 @@ public abstract class Animal {
 			System.out.println(this.animalSays()+"Je me réveille");
 		}
 		else
-			System.out.println(this.animalSays()+"Je vais dormir");
+			System.out.println(this.animalSays()+ RED + "Je ne dors pas" + RESET);
 			
 	}
 	
@@ -246,7 +246,7 @@ public abstract class Animal {
 		if (!this.isSleeping())
 		{
 			this.setSleeping(true);
-			System.out.println(this.animalSays()+"Je dors");
+			System.out.println(this.animalSays()+"Je vais dormir");
 		}
 		else
 			System.out.println(this.animalSays()+"zzzzzzzzzzzzzzzzzzzzzz");
