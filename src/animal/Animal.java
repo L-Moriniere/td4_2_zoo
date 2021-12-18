@@ -1,11 +1,8 @@
-/**
- * 
- */
 package animal;
 
 /**
  * @author logan
- *	
+ *	Classe Animal
  */
 public abstract class Animal {
 	
@@ -28,32 +25,30 @@ public abstract class Animal {
 		super();
 	}
 
-	
-	
-	
-	
+
 	
 	/**
 	 * @param specie
+	 * String espece
 	 * @param gender
+	 * Enum gender
 	 * @param weight
+	 * int poids
 	 * @param age
+	 * int age
 	 * @param size
-	 * @param isHungry
-	 * @param isSick
-	 * @param isSleeping
+	 * double taille
 	 */
-	public Animal(String specie, Gender gender, int weight, int age, double size, boolean isHungry, boolean isSick,
-			boolean isSleeping, int pregnancy) {
+	public Animal(String specie, Gender gender, int weight, int age, double size, int pregnancy) {
 		super();
 		this.specie = specie;
 		this.gender = gender;
 		this.weight = weight;
 		this.age = age;
 		this.size = size;
-		this.isHungry = isHungry;
-		this.isSick = isSick;
-		this.isSleeping = isSleeping;
+		this.isHungry = false;
+		this.isSick = false;
+		this.isSleeping = false;
 		this.pregnancy = pregnancy;
 	}
 
@@ -194,13 +189,13 @@ public abstract class Animal {
 	}
 	
 	
-	public void finalize()  {
+	protected void finalize()  {
 		System.out.println(this.animalSays()+"FATALITY");
 	}
 	
 	
 	/**
-	 * make an animal to eat
+	 * nourrir un animal
 	 */
 	public void toFeed() {
 		if (!this.isSleeping() && this.isHungry()) {
@@ -213,12 +208,12 @@ public abstract class Animal {
 	
 	
 	/**
-	 * make an animal to talk
+	 * faire parler un animal
 	 */
 	public abstract void sound();
 	
 	/**
-	 * make an animal to get healed
+	 * soigner un animal
 	 */
 	public void toHeal() {
 		if (this.isSick) {
@@ -230,7 +225,7 @@ public abstract class Animal {
 	
 	
 	/**
-	 * make an animal to wake up 
+	 * réveiller un animal
 	 */
 	public void toWakeUp() {
 		if (this.isSleeping())
@@ -244,7 +239,7 @@ public abstract class Animal {
 	}
 	
 	/**
-	 * make an animal to fell asleep
+	 * endormir un animal
 	 */
 	public void toSleep() {
 		if (!this.isSleeping())

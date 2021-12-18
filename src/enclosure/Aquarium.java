@@ -1,6 +1,3 @@
-/**
- * 
- */
 package enclosure;
 
 import animal.Animal;
@@ -10,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * @author logan
- *
+ * Classe Aquarium étend d'Enclos
  */
 public class Aquarium extends Enclosure {
 	
@@ -20,18 +17,20 @@ public class Aquarium extends Enclosure {
 	
 	
 	/**
+	 * Autre paramètres
+	 * Liste d'animaux vide
+	 * Propreté= Good
+	 * salinité = 50.0
 	 * @param name
+	 * String name
 	 * @param area
+	 * double area
 	 * @param nb_max
-	 * @param nb_animal
-	 * @param listOfAnimal
-	 * @param cleanness
+	 * int nb_max
+	 * @param depth
+	 * double profondeur
+	 *
 	 */
-	public Aquarium(String name, double area, int nb_max) {
-		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
-		// TODO Auto-generated constructor stub
-	}
-
 	public Aquarium(String name, double area, int nb_max,  double depth) {
 		super(name, area, nb_max, 0, new ArrayList<Animal>(), Cleanness.GOOD);
 		this.depth = depth;
@@ -72,14 +71,21 @@ public class Aquarium extends Enclosure {
 		this.salinity = salinity;
 	}
 
-	
 
+	/**
+	 * @return To string
+	 */
 	@Override
 	public String toString() {
 		return super.toString(this.getDepth(), this.getSalinity());
 	}
 
 
+	/**
+	 * @param a
+	 * Animal à ajouter
+	 * @return
+	 */
 	@Override
 	public boolean addAnimal(Animal a) {
 		if(this.getNb_max() > this.getNb_animal()) {
@@ -88,18 +94,19 @@ public class Aquarium extends Enclosure {
 				this.getListOfAnimal().add(a);
 				this.setNb_animal(this.getNb_animal()+1);
 				System.out.println(a.getSpecie()+" ajouté");
-				return true;
 			}
 			else {
 				System.out.println("Ce n'est pas un poisson");
-				return false;
 			}
 		}else {
 			System.out.println("L'enclos est plein !");
-			return false;
 		}
+		return false;
 	}
 
+	/**
+	 * Permet de nettoyer un enclos
+	 */
 	@Override
 	public void toClean() {
 		if (this.getListOfAnimal().isEmpty())
