@@ -23,6 +23,9 @@ public class Zoo {
 
     private Scanner scanner = new Scanner(System.in);
     private static Zoo _instance;
+    private int nbDeadAnimal =0;
+
+
 
     public static final String RESET = "\u001B[0m";
     // Regular Colors
@@ -108,6 +111,20 @@ public class Zoo {
      */
     public ArrayList<Enclosure> getListOfEnclosure() {
         return listOfEnclosure;
+    }
+
+    /**
+     * @return nombre animaux morts
+     */
+    public int getNbDeadAnimal() {
+        return nbDeadAnimal;
+    }
+
+    /**
+     * @param nbDeadAnimal nombre animaux morts
+     */
+    public void setNbDeadAnimal(int nbDeadAnimal) {
+        this.nbDeadAnimal = nbDeadAnimal;
     }
 
     /**
