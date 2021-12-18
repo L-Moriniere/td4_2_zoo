@@ -96,7 +96,7 @@ public class Commands {
     public boolean feed(String[] args) {
         if (args.length != 0) {
             getEnclosureByName(args[0]).feedAllAnimals();
-            System.out.println("All animal in " + getEnclosureByName(args[0]).getName() + " have been" + coloredText(PURPLE, "fed"));
+            System.out.println("All animal in " + getEnclosureByName(args[0]).getName() + " have been" + coloredText(PURPLE, " fed"));
         } else {
             System.out.println("""
                     /!\\ Argument missing !
