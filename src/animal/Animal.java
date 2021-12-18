@@ -33,11 +33,6 @@ public abstract class Animal {
 		super();
 	}
 
-	
-	
-	
-	
-	
 	/**
 	 * @param specie
 	 * @param gender
@@ -253,10 +248,6 @@ public abstract class Animal {
 			
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
 		String animalName = PURPLE + getSpecie() + RESET;
@@ -265,11 +256,18 @@ public abstract class Animal {
 		String weight = YELLOW + getWeight() + "kg" + RESET;
 		String age = CYAN + getAge() + "Years" + RESET;
 		String size = RED + getSize() + "m" + RESET;
-		String hungry = isHungry() ? YELLOW + "Hungry" + RESET: "";
-		String sick = isSick() ? GREEN + "Sick" + RESET: "";
-		String sleeping = isSleeping() ? BLUE + "Sleeping" + RESET :"";
+		String hungry = isHungry() ? YELLOW + " Hungry" + RESET: "";
+		String sick = isSick() ? GREEN + " Sick" + RESET : "";
+		String sleeping = isSleeping() ? BLUE + " Sleeping" + RESET: "";
 
-		return (String.join(" ", animalName, specie, animalGender, weight, age, size, hungry, sick, sleeping));
+		return (String.join(" ", animalName, specie, animalGender, weight, age, size) + hungry + sick + sleeping);
+	}
+
+	public String toSimpleString() {
+		String animalName = PURPLE + getSpecie() + RESET;
+		String specie = getClass().getSimpleName();
+
+		return (String.join(" ", animalName, specie));
 	}
 
 	

@@ -201,6 +201,14 @@ public abstract class Enclosure {
 		return String.join("", stringOfAnimal);
 	}
 
+	public String toSimpleString(){
+		String name = GREEN + getName() + RESET;
+		String type = getClass().getSimpleName();
+		String cleanness = getCleanness().toString();
+
+		return String.join(" ", name, type, cleanness);
+	}
+
 
 
 	/**

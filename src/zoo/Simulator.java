@@ -15,15 +15,20 @@ public class Simulator implements Runnable {
     private Commands commandsList = new Commands();
     private int nbAction = 0;
     private int nbMaxAction = 3;
-    private String prefix = "!";
+    private String prefix = "";
     private final Zoo zoo = Zoo.getInstance();
 
 
-    public static final String GREEN = "\u001B[32m";
-    public static final String RED = "\u001B[31m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String WHITE = "\u001B[37m";
     public static final String RESET = "\u001B[0m";
+    // Regular Colors
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String BLUE = "\033[0;34m";    // BLUE
+    public static final String PURPLE = "\033[0;35m";  // PURPLE
+    public static final String CYAN = "\033[0;36m";    // CYAN
+    public static final String WHITE = "\033[0;37m";   // WHITE
 
     /**
      * Cette methode est appelé au démarrage du Thread dans le main du Zoo
@@ -31,7 +36,6 @@ public class Simulator implements Runnable {
      */
     public void run() {
         commandsList.help();
-        System.out.println("Tu as un total de " + GREEN + nbMaxAction + RESET + " action à toi de bien les utiliser :");
 
         while (true){
             randomAction();
@@ -45,10 +49,12 @@ public class Simulator implements Runnable {
     private void userAction() {
         System.out.println(PURPLE + "Action restante : " + RESET +
                 (nbMaxAction - nbAction) + "/" + nbMaxAction);
+        System.out.print(">");
         // Reading data using readLine
         try {
             String userInput = reader.readLine();
             boolean Action = true;
+            boolean endTurn = false;
 
             if (userInput.startsWith(prefix)) {
 
@@ -64,6 +70,7 @@ public class Simulator implements Runnable {
                     case "addanimal" -> Action = commandsList.addAnimal();
                     case "heal" -> Action = commandsList.heal();
                     case "wakeup" -> Action = commandsList.wakeUp();
+                    case "end" -> endTurn = commandsList.endTurn();
                     case "leave" -> {
                         System.out.println("GoodBye");
                         System.exit(0);
@@ -71,7 +78,8 @@ public class Simulator implements Runnable {
                     default -> Action = commandsList.help();
                 }
 
-                if (Action) nbAction++;
+                if (Action && !endTurn) nbAction++;
+                if (endTurn) nbAction = nbMaxAction;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,12 +156,12 @@ public class Simulator implements Runnable {
 
             if (!animal.isHungry()) {
                 animal.setHungry(true);
-                System.out.println(animal+ " a faim");
+                System.out.println(animal.toSimpleString() + YELLOW + " a faim" + RESET);
             }
             else
-                System.out.println(animal + "a déjà faim");
+                System.out.println(animal.toSimpleString() + RED + " a déjà faim" + RESET);
         }
-        System.out.println("L'enclos est vide");
+        else System.out.println("L'enclos est vide");
     }
 
     /**
@@ -165,16 +173,16 @@ public class Simulator implements Runnable {
         int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
         Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
 
-        if (enclos.getListOfAnimal().isEmpty()) {
+        if (!enclos.getListOfAnimal().isEmpty()) {
 
             if (enclos.getCleanness() == Cleanness.GOOD) {
                 enclos.setCleanness(Cleanness.CORRECT);
-                System.out.println(enclos.getName() + " s'est sali");
+                System.out.println(enclos.toSimpleString());
 
             }
             else if (enclos.getCleanness() == Cleanness.CORRECT) {
                 enclos.setCleanness(Cleanness.BAD);
-                System.out.println(enclos.getName() + " nuit à la santé des animaux");
+                System.out.println(enclos.toSimpleString());
             }
             else {
                 getAnimalSick();
@@ -187,6 +195,10 @@ public class Simulator implements Runnable {
      */
     private void randomAction() {
         Random random = new Random();
+        System.out.println();
+        System.out.println("Et poof ! Nous somme le lendemain");
+        System.out.println();
+
         int nbEventRand = random.nextInt(3) ;
         for (int i = 0; i <= nbEventRand; i++) {
             if (zoo.getNbDeadAnimal() == 3) {

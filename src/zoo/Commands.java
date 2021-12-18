@@ -7,10 +7,7 @@ import enclosure.Aviary;
 import enclosure.Default_enclosure;
 import enclosure.Enclosure;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Commands {
     /**
@@ -31,9 +28,9 @@ public class Commands {
     public static final String WHITE = "\033[0;37m";   // WHITE
 
     /**
-     * Lire la prochaine chaîne de caractère non vide
-     * @param input
-     * @return String value
+     * Lie la prochaine chaîne de caractère non vide
+     * @param input scanner d'entrer
+     * @return Une chaîne de caractère valide taper par le joueur
      */
     public String getUserLine(Scanner input){
         String value;
@@ -42,23 +39,55 @@ public class Commands {
             try {
                 value = input.next();
                 if(value.isEmpty()){
-                    System.out.println(coloredText(RED, "La chaine de caractère ne dois pas être vide"));
+                    System.out.println(coloredText(RED, "La chaîne de caractère ne dois pas être vide"));
                 }else {
                     break; // Input successful, break loop.
                 }
             } catch (InputMismatchException IME) {
-                System.out.println(coloredText(RED, "Seulement une chaine de caractère sont accepté"));
+                System.out.println(coloredText(RED, "Seulement une chaîne de caractère sont accepté"));
                 input.nextLine();
             }
         }
         return (value);
     }
 
+
     /**
-     * Lire le genre de l'animal et vérifie que la valeur rentré fait partie de l'enum
-     * @param input
-     * @param allow
-     * @return Gender
+     * Permet de demander une confirmation à utilisateur
+     * @param input scanner d'entrer
+     * @return True si y / False si n
+     */
+    public boolean userConfirm(Scanner input){
+        boolean value;
+        value = false;
+        System.out.println("[y/n]");
+        while (true) {
+            try {
+                String userInput = input.next().toLowerCase();
+                if(userInput.equals("y")){
+                    value = true;
+                    System.out.println("Ton tour s'achève ici !\n");
+                    break;
+                }else if(userInput.equals("n")){
+                    System.out.println("On continue !");
+                    break;
+                }else{
+                    System.out.println(coloredText(RED, "Tu doit répondre par \"y\" ou \"n\""));
+                }
+            } catch (InputMismatchException IME) {
+                System.out.println(coloredText(RED, "Seulement une chaîne de caractère sont accepté"));
+                input.nextLine();
+            }
+        }
+
+        return value;
+    }
+
+    /**
+     * Lie le genre de l'animal et vérifie que la valeur rentré fait partie de l'enum
+     * @param input scanner d'entrer
+     * @param allow Enum.values() pour avoir la list des valeurs accepté
+     * @return Le genre de l'animal correspondent à la saisie utilisateur
      */
     public Gender getUserGender(Scanner input, Gender[] allow){
         Gender value;
@@ -86,10 +115,10 @@ public class Commands {
     }
 
     /**
-     * Lire le genre de l'animal et vérifie que la valeur rentré fait partie de l'enum
-     * @param input  un scanner
-     * @param allow
-     * @return EmployeeGender
+     * Lie le genre de l'animal et vérifie que la valeur rentré fait partie de l'enum
+     * @param input scanner d'entrer
+     * @param allow Enum.values() pour avoir la list des valeurs accepté
+     * @return Le genre de l'employee correspondent à la saisie utilisateur
      */
     public EmployeeGender getUserEmployeeGender(Scanner input, EmployeeGender[] allow){
         EmployeeGender value;
@@ -117,11 +146,11 @@ public class Commands {
     }
 
     /**
-     * Lire un entier compris entre une valeur minimum et maximum
-     * @param input
-     * @param minValue
-     * @param maxValue
-     * @return
+     * Lie un entier compris entre une valeur minimum et maximum
+     * @param input scanner d'entrer
+     * @param minValue Valeur minimal accepter
+     * @param maxValue Valeur maximal accepter
+     * @return Un entier compris entre le min et max
      */
     public Integer getUserInt(Scanner input, int minValue, int maxValue) {
         int value;
@@ -143,11 +172,11 @@ public class Commands {
     }
 
     /**
-     * Lire un nombre flottant compris entre une valeur minimum et maximum
-     * @param input
-     * @param minValue
-     * @param maxValue
-     * @return true
+     * Lie un nombre flottant compris entre une valeur minimum et maximum
+     * @param input scanner d'entrer
+     * @param minValue Valeur minimal accepter
+     * @param maxValue Valeur maximal accepter
+     * @return Un nombre flottant compris entre le min et max
      */
     public Double getUserDouble(Scanner input, double minValue, double maxValue){
         double value;
@@ -174,7 +203,7 @@ public class Commands {
 
     /**
      * Cette commande permet au joueur d'afficher l'état du zoo
-     * @return true
+     * @return true l'action sera donc comptabilisé
      */
     public boolean viewZoo(){
         zoo.printEnclosure();
@@ -186,32 +215,35 @@ public class Commands {
      * @return False l'action ne sera donc pas comptabilisé
      */
     public boolean help(){
-        System.out.println(coloredText(RED, "!leave"));
+        System.out.println(coloredText(RED, "leave"));
         System.out.println("    Quitter le jeu");
 
-        System.out.println(coloredText(RED, "!zoo"));
+        System.out.println(coloredText(RED, "zoo"));
         System.out.println("    Cette commande vous permet de voir l'état du zoo");
 
-        System.out.println(coloredText(RED, "!feed"));
+        System.out.println(coloredText(RED, "feed"));
         System.out.println("    Cette commande vous permet de nourrir tous les animaux de l'enclos.");
 
-        System.out.println(coloredText(RED, "!clean"));
+        System.out.println(coloredText(RED, "clean"));
         System.out.println("    Cette commande vous permet de nettoyer cette enclos");
 
-        System.out.println(coloredText(RED, "!heal"));
+        System.out.println(coloredText(RED, "heal"));
         System.out.println("    Cette commande permet de soigner un animal.");
 
-        System.out.println(coloredText(RED, "!wakeup"));
+        System.out.println(coloredText(RED, "wakeup"));
         System.out.println("    Cette commande vous permet de réveiller un animal");
 
-        System.out.println(coloredText(RED, "!addEnclosure "));
+        System.out.println(coloredText(RED, "addEnclosure"));
         System.out.println("    Cette commande vous permet d'ajouter un nouvel enclos au zoo.");
 
-        System.out.println(coloredText(RED, "!moveAnimal "));
+        System.out.println(coloredText(RED, "moveAnimal"));
         System.out.println("    Cette commande permet de déplacer un animal d'un enclos à un autre.");
 
-        System.out.println(coloredText(RED, "!addAnimal "));
+        System.out.println(coloredText(RED, "addAnimal"));
         System.out.println("    Cette commande permet d'ajouter un animal dans un enclos.");
+
+        System.out.println(coloredText(RED, "end"));
+        System.out.println("    Cette commande permet au joueur de finir son tour.");
 
         return false;
     }
@@ -397,5 +429,19 @@ public class Commands {
         animal.toWakeUp();
 
         return true;
+    }
+
+    /**
+     * Cette commande permet au joueur de finir son tour quelque soit le nombre d'action qu'il lui reste
+     * @return True l'action sera donc comptabilisé
+     */
+    public Boolean endTurn(){
+        System.out.println(coloredText(PURPLE, "Es-tu sûr de vouloir finir ton tour ?"));
+
+        if(userConfirm(scanner)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
