@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author logan
+ * @author Logan & Lorenzo
  */
 public class Zoo {
 
@@ -36,7 +36,6 @@ public class Zoo {
     public Zoo() {
         // TODO Auto-generated constructor stub
     }
-
 
     /**
      * Constructeur
@@ -641,8 +640,6 @@ public class Zoo {
         Simulator Game = new Simulator();
         Thread t1 = new Thread(Game);
         t1.start();
-
-
     }
 
 
