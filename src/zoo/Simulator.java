@@ -1,6 +1,8 @@
 package zoo;
 
+import animal.Animal;
 import enclosure.Cleanness;
+import enclosure.Enclosure;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +16,6 @@ public class Simulator implements Runnable {
     private int nbMaxAction = 3;
     private String prefix = "!";
     private final Zoo zoo = Zoo.getInstance();
-
 
 
     public static final String GREEN = "\u001B[32m";
@@ -75,71 +76,112 @@ public class Simulator implements Runnable {
         }
     }
 
+    public void getAnimalSick() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(enclos.getListOfAnimal().size());
+            Animal animal = enclos.getListOfAnimal().get(randAnimal);
+
+            if (!animal.isSick()) {
+                animal.setSick(true);
+                System.out.println(animal + " est malade, si vous ne le soignez pas il risque de mourir");
+            }
+
+            else {
+                System.out.println(animal + " est mort.. :(");
+                zoo.setNbDeadAnimal(zoo.getNbDeadAnimal() + 1);
+                enclos.getListOfAnimal().remove(animal);
+            }
+        }
+
+    }
+
+    public void getAnimalSleep() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
+            Animal animal = zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal);
+
+            if (!animal.isSleeping())
+            {
+                animal.setSleeping(true);
+                System.out.println(animal + " est très fatigué");
+            }
+            else
+                System.out.println(animal + " est déjà endormi");
+        }
+        else System.out.println("L'enclos est vide");
+
+    }
+
+    public void getAnimalHungry() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
+            Animal animal = zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal);
+
+            if (!animal.isHungry()) {
+                animal.setHungry(true);
+                System.out.println(animal+ " a faim");
+            }
+            else
+                System.out.println(animal + "a déjà faim");
+        }
+        System.out.println("L'enclos est vide");
+    }
+
+    public void getEnclosureDirty() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (enclos.getListOfAnimal().isEmpty()) {
+
+            if (enclos.getCleanness() == Cleanness.GOOD) {
+                enclos.setCleanness(Cleanness.CORRECT);
+                System.out.println(enclos.getName() + " s'est sali");
+
+            }
+            else if (enclos.getCleanness() == Cleanness.CORRECT) {
+                enclos.setCleanness(Cleanness.BAD);
+                System.out.println(enclos.getName() + " nuit à la santé des animaux");
+            }
+            else {
+                getAnimalSick();
+            }
+        }
+    }
+
     private void randomAction() {
         Random random = new Random();
-        int nbEventRand = random.nextInt(5) + 1;
-        for (int i = 1; i <= nbEventRand; i++) {
+        int nbEventRand = random.nextInt(3) ;
+        for (int i = 0; i <= nbEventRand; i++) {
             if (zoo.getNbDeadAnimal() == 3) {
-                System.out.println(RED+"GAME OVER, tous les animaux sont morts"+RESET);
+                System.out.println(RED + "GAME OVER, tous les animaux sont morts" + RESET);
                 System.exit(0);
             }
             int randEvent = random.nextInt(4) + 1;
             switch (randEvent) {
-                case 1:
-                    //faim
-                    int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().isEmpty()) break;
-                    int randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).isHungry()) break;
-                    zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).setHungry(true);
-                    System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " a faim");
-                    break;
-                case 2:
-                    //malade
-                    randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().isEmpty()) break;
-                    randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
-                    if (!zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).isSick()) {
-                        zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).setSick(true);
-                        System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " est malade, si vous ne le soignez pas il risque de mourir");
-                    } else {
-                        System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " est mort.. :(");
-                        zoo.setNbDeadAnimal(zoo.getNbDeadAnimal()+1);
-                        zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().remove(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal));
-                    }
-                    break;
-                case 3:
-                    //sleep
-                    randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().isEmpty()) break;
-                    randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).isSleeping()) break;
-                    zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).setSleeping(true);
-                    System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " est très fatigué");
-                    break;
-                case 4:
-                    randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().isEmpty()) break;
-                    if (zoo.getListOfEnclosure().get(randEnclosure).getCleanness() == Cleanness.GOOD) {
-                        zoo.getListOfEnclosure().get(randEnclosure).setCleanness(Cleanness.CORRECT);
-                        System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getName() + " s'est sali");
-
-                    } else if (zoo.getListOfEnclosure().get(randEnclosure).getCleanness() == Cleanness.CORRECT) {
-                        zoo.getListOfEnclosure().get(randEnclosure).setCleanness(Cleanness.BAD);
-                        System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getName() + " nuit à la santé des animaux");
-                    } else {
-                        randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
-                        if (!zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).isSick()) {
-                            zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal).setSick(true);
-                            System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " est malade, si vous ne le soignez pas il risque de mourir");
-                        } else {
-                            zoo.setNbDeadAnimal(zoo.getNbDeadAnimal()+1);
-                            System.out.println(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal) + " est mort.. :(");
-                            zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().remove(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal));
-                        }
-                    }
-                    break;
-
+                case 1 -> getAnimalHungry();
+                case 2 -> getAnimalSick();
+                case 3 -> getAnimalSleep();
+                case 4 -> getEnclosureDirty();
             }
         }
     }
