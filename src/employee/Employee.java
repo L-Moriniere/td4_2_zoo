@@ -136,10 +136,10 @@ public class Employee implements Runnable {
 			int animalIndex = list.indexOf(a);
 			if (to.addAnimal(list.get(animalIndex))) {
 				from.removeAnimal(a);
+				this.toExaminate(from);
+				this.toExaminate(to);
+				System.out.println("The transfer was successful");
 			}
-			
-			this.toExaminate(from);
-			this.toExaminate(to);			
 		}else {
 			System.out.println("nope");
 		}

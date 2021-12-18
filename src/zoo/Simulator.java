@@ -1,41 +1,43 @@
 package zoo;
 
-import enclosure.Enclosure;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
 
-public class Simulator extends TimerTask {
+public class Simulator implements Runnable {
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private int nbAction = 0;
     private int nbMaxAction = 3;
     private String prefix = "!";
 
-    private Zoo zoo = Zoo.getInstance();
+    public static final String GREEN = "\u001B[32m";
+    public static final String RED = "\u001B[31m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String WHITE = "\u001B[37m";
+    public static final String RESET = "\u001B[0m";
 
     public void run() {
-        zoo.startGame();
-//        zootopia.printAnimals();
-//        zootopia.promptUserGeneral();
-
-        while (true) {
+        while (true){
             randomAction();
+            while (nbAction < nbMaxAction) {
+                userAction();
+            }
+            nbAction = 0;
         }
     }
 
     private void userAction() {
-        System.out.println("Tu as un total de 3 action à toi de bien les utiliser :");
+        System.out.println("Tu as un total de " + GREEN + (nbMaxAction - nbAction) + RESET + " action à toi de bien les utiliser :");
         // Reading data using readLine
         try {
-            String userInput = this.reader.readLine();
+            String userInput = reader.readLine();
+            boolean Action = true;
 
             if (userInput.startsWith(prefix)) {
 
                 String[] command = userInput.substring(this.prefix.length()).split(" +");
-                String commandName = command[0].toLowerCase(Locale.ROOT);
+                String commandName = command[0].toLowerCase();
 
                 String[] args = new String[command.length - 1];
 
@@ -43,61 +45,33 @@ public class Simulator extends TimerTask {
                     args[k++] = command[i];
                 }
 
-                System.out.println(Arrays.toString(command));
-                System.out.println(commandName);
-                System.out.println(Arrays.toString(args));
+                Commands commandsList = new Commands();
 
                 switch (commandName) {
+                    case "feed" -> Action = commandsList.feed(args);
+                    case "clean" -> Action = commandsList.clean(args);
+                    case "addaviary" -> Action = commandsList.addAviary(args);
+                    case "addaquarium" -> Action = commandsList.addAquarium(args);
+                    case "addenclosure" -> Action = commandsList.addEnclosure(args);
+                    case "moveanimal" -> Action = commandsList.moveAnimal();
+                    case "zoo" -> Action = commandsList.viewZoo();
                     case "leave" -> {
                         System.out.println("GoodBye");
                         System.exit(0);
                     }
-                    case "feed" -> {
-                        //this.zoo.getEmployee().toFeed();
-                        if(getEnclosureByName(args[0]) == null){
-                            System.out.println("Voici la list des enclos :");
-                            for(int i = 0; i < zoo.getListOfEnclosure().toArray().length; i++){
-                                System.out.println(zoo.getListOfEnclosure().get(i).getName());
-                            }
-                            userAction();
-                        }
-                        System.out.println(getEnclosureByName(args[0]));
-
-                        System.out.println("Test");
-                    }
-                    case "" -> {
-                        System.out.println("Test");
-                    }
-                    default -> {
-                        System.out.println("La commande rentrer est incorrect voici la list des commande :" +
-                                "\n!leave -> Quitter le jeux");
-                    }
+                    default -> Action = commandsList.help();
                 }
 
-                nbAction++;
-                System.out.println("Il te reste " + nbAction + "/3");
+                if (Action) nbAction++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void randomAction() {
         System.out.println("random action");
-        while (nbAction < nbMaxAction) {
-            userAction();
-        }
-        nbAction = 0;
     }
 
-    private Enclosure getEnclosureByName(String enclosureName){
-        Enclosure e = null;
-        ArrayList<Enclosure> zooEnclosure = zoo.getListOfEnclosure();
-        for (int i = 0; i < zooEnclosure.toArray().length; i++) {
-            if(zooEnclosure.get(i).getName().toLowerCase(Locale.ROOT).equals(enclosureName.toLowerCase(Locale.ROOT)))
-                e = zooEnclosure.get(i);
-        }
-        return e;
-    }
+
 }

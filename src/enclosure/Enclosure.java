@@ -6,7 +6,6 @@ package enclosure;
 import animal.Animal;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * @author logan
@@ -21,12 +20,16 @@ public abstract class Enclosure {
 	private ArrayList<Animal> listOfAnimal = new ArrayList<Animal>();
 	private Cleanness cleanness = Cleanness.GOOD;
 
-	public static final String GREEN = "\u001B[32m";
-	public static final String RED = "\u001B[31m";
-	public static final String PURPLE = "\u001B[35m";
-	public static final String WHITE = "\u001B[37m";
 	public static final String RESET = "\u001B[0m";
-	public static final String BLUE = "\033[0;34m";
+	// Regular Colors
+	public static final String BLACK = "\033[0;30m";   // BLACK
+	public static final String RED = "\033[0;31m";     // RED
+	public static final String GREEN = "\033[0;32m";   // GREEN
+	public static final String YELLOW = "\033[0;33m";  // YELLOW
+	public static final String BLUE = "\033[0;34m";    // BLUE
+	public static final String PURPLE = "\033[0;35m";  // PURPLE
+	public static final String CYAN = "\033[0;36m";    // CYAN
+	public static final String WHITE = "\033[0;37m";   // WHITE
 	
 	
 	
@@ -136,18 +139,66 @@ public abstract class Enclosure {
 
 	
 	public String toString() {
-		return "\n"+BLUE+name +RESET +": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal
-				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
+		String name = GREEN + getName() + RESET;
+		String capacity = getNb_animal() + "/" + getNb_max();
+		String type = getClass().getSimpleName();
+		String cleanness = getCleanness().toString();
+
+		StringBuilder stringOfAnimal;
+		stringOfAnimal = new StringBuilder(String.join(" ", name, type, capacity, cleanness) + "\n");
+
+		String[] ArrayAnimal = new String[listOfAnimal.size()];
+		int index = 0;
+		for (Animal a : listOfAnimal) {
+			String animalIndex = "(" + (index++ + 1) + ").";
+
+			stringOfAnimal.append(String.join(" ", "   ├──", animalIndex, a.toString())).append("\n");
+		}
+
+		return String.join("", stringOfAnimal);
 	}
 
 	public String toString(double height) {
-		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t height=" + height
-				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
+		String name = GREEN + getName() + RESET;
+		String capacity = getNb_animal() + "/" + getNb_max();
+		String type = getClass().getSimpleName();
+		String sHeight = CYAN + Double.toString(height) + RESET;
+		String cleanness = getCleanness().toString();
+
+		StringBuilder stringOfAnimal;
+		stringOfAnimal = new StringBuilder(String.join(" ", name, type, capacity, sHeight, cleanness) + "\n");
+
+		String[] ArrayAnimal = new String[listOfAnimal.size()];
+		int index = 0;
+		for (Animal a : listOfAnimal) {
+			String animalIndex = "(" + (index++ + 1) + ").";
+
+			stringOfAnimal.append(String.join(" ", "   ├──", animalIndex, a.toString())).append("\n");
+		}
+
+		return String.join("", stringOfAnimal);
 	}
 
 	public String toString(double salinity, double depth) {
-		return "\n"+BLUE+name +RESET  + ": area=" + area + "\t nb_max=" + nb_max + "\t nb_animal=" + nb_animal + "\t salinity=" + salinity+ "\t depth=" + depth
-				+ "\t cleanness=" + cleanness+"\n\t listOfAnimal=" + listOfAnimal + "\n\n";
+		String name = GREEN + getName() + RESET;
+		String capacity = getNb_animal() + "/" + getNb_max();
+		String type = getClass().getSimpleName();
+		String sSalinity = CYAN + Double.toString(salinity) + RESET;
+		String sDepth = YELLOW + Double.toString(depth) + RESET;
+		String cleanness = getCleanness().toString();
+
+		StringBuilder stringOfAnimal;
+		stringOfAnimal = new StringBuilder(String.join(" ", name, type, capacity, sSalinity, sDepth, cleanness) + "\n");
+
+		String[] ArrayAnimal = new String[listOfAnimal.size()];
+		int index = 0;
+		for (Animal a : listOfAnimal) {
+			String animalIndex = "(" + (index++ + 1) + ").";
+
+			stringOfAnimal.append(String.join(" ", "   ├──", animalIndex, a.toString())).append("\n");
+		}
+
+		return String.join("", stringOfAnimal);
 	}
 
 
@@ -160,21 +211,20 @@ public abstract class Enclosure {
 	public abstract boolean addAnimal(Animal a);
 	
 	public void removeAnimal(Animal a) {
-		this.listOfAnimal.remove(a);
-		System.out.println(a.getClass().getSimpleName()+" enlevé");
+		getListOfAnimal().remove(a);
+		System.out.println(a.getClass().getSimpleName()+" Remove");
 	};
 
 	public void printAnimals() {
-		for (Animal animal : listOfAnimal)
+		for (Animal animal : getListOfAnimal())
 			System.out.println((listOfAnimal.indexOf(animal) + 1) + ". " + animal);
 	}
 
 
 	public void feedAllAnimals() {
-		
-		ListIterator<Animal> li = this.getListOfAnimal().listIterator();
-		while (li.hasNext())
-			li.next().toFeed();
+		for (Animal li : getListOfAnimal()){
+			li.toFeed();
+		}
 	};
 	
 	public abstract void toClean();

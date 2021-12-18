@@ -22,13 +22,17 @@ public class Zoo {
     private ArrayList<Enclosure> listOfEnclosure = new ArrayList<Enclosure>();
     private static Zoo _instance;
 
-    public static final String GREEN = "\u001B[32m";
-    public static final String RED = "\u001B[31m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String WHITE = "\u001B[37m";
     public static final String RESET = "\u001B[0m";
+    // Regular Colors
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String BLUE = "\033[0;34m";    // BLUE
+    public static final String PURPLE = "\033[0;35m";  // PURPLE
+    public static final String CYAN = "\033[0;36m";    // CYAN
+    public static final String WHITE = "\033[0;37m";   // WHITE
 
-    public Clock clock = new Clock();
 
     /**
      *
@@ -116,14 +120,16 @@ public class Zoo {
     public void addEnclosure(Enclosure e) {
         if (this.getListOfEnclosure().size() < this.getNbMaxEnclosure()) {
             this.getListOfEnclosure().add(e);
-            System.out.println("Enclos " + e.getName() + " ajouté au zoo");
+            System.out.println("Enclos " + GREEN + e.getName() + RESET + " Was added");
         }
         else System.out.println("Le zoo a trop d'enclos");
     }
 
-    public void printEnclosure() {
-        for (Enclosure enclosure : listOfEnclosure)
-            System.out.println((listOfEnclosure.indexOf(enclosure) + 1) + ". " + enclosure);
+
+    public void printEnclosure(){
+        for (Enclosure e : listOfEnclosure) {
+            System.out.println(String.join(" ", "(" + ((listOfEnclosure.indexOf(e) + 1)) + ").", e.toString()));
+        }
     }
 
     public int printNbAnimals() {
@@ -167,12 +173,12 @@ public class Zoo {
     }
 
     public void makeCustom() {
-        System.out.println("""
+        System.out.println(PURPLE + """
                 Que voulez vous faire ?\s
                  1. Créer un enclos
                  2. Ajouter un animal\s
                  3. Lancer la partie\s
-                """);
+                """ + RESET);
         Scanner scanner = new Scanner(System.in);
         int rep = scanner.nextInt();
         switch (rep) {
@@ -198,7 +204,7 @@ public class Zoo {
     public void promptUserGeneral() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Que voulez-vous faire ? Vous occuper des animaux (1) ? Vous occuper des enclos ? (2)");
+        System.out.println(PURPLE + "Que voulez-vous faire ? Vous occuper des animaux (1) ? Vous occuper des enclos ? (2)" + RESET);
 
         int rep = scanner.nextInt();
         switch (rep) {
@@ -532,13 +538,13 @@ public class Zoo {
         System.out.println(PURPLE + "Bonjour, vous avez lancé une nouvelle partie de Zootopia ! " +
                 "Quel est ton nom d'employé ?" + RESET);
         String name = scanner.next();
-        System.out.println("Quel est ton age ?");
+        System.out.println(PURPLE + "Quel est ton age ?" + RESET);
         int age = scanner.nextInt();
-        System.out.println("Quel est ton genre (M/F)?");
+        System.out.println(PURPLE + "Quel est ton genre (M/F)?" + RESET);
         String genre = scanner.next();
         Employee user = new Employee(name, EmployeeGender.valueOf(genre), age);
         this.setEmployee(user);
-        System.out.println("Combien voulez vous d'enclos max dans votre zoo ? (>= à 3 si vous utilisez le preset du zoo)");
+        System.out.println(PURPLE + "Combien voulez vous d'enclos max dans votre zoo ? (>= à 3 si vous utilisez le preset du zoo)" + RESET);
         int nbEnclosureMax = scanner.nextInt();
         this.setNbMaxEnclosure(nbEnclosureMax);
         System.out.println("Voulez-vous utiliser un preset défini (1) ou bien créer votre propre zoo (2)?");
@@ -548,8 +554,6 @@ public class Zoo {
             case 2 -> makeCustom();
             default -> System.out.println("Il faut mettre 1 ou 2");
         }
-        promptUserGeneral();
-
     }
 
     public static void main(String[] args) {
@@ -558,6 +562,7 @@ public class Zoo {
         // TODO : Launch game
         // TODO : Runnable Employee, Animal, Enclosure
 
+        getInstance().startGame();
 
         Simulator Game = new Simulator();
         Thread t1 = new Thread(Game);

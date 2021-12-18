@@ -15,11 +15,16 @@ public abstract class Animal {
 	private double size;
 	private boolean isHungry, isSick, isSleeping;
 
-	public static final String GREEN = "\u001B[32m";
-	public static final String RED = "\u001B[31m";
-	public static final String PURPLE = "\u001B[35m";
-	public static final String WHITE = "\u001B[37m";
 	public static final String RESET = "\u001B[0m";
+	// Regular Colors
+	public static final String BLACK = "\033[0;30m";   // BLACK
+	public static final String RED = "\033[0;31m";     // RED
+	public static final String GREEN = "\033[0;32m";   // GREEN
+	public static final String YELLOW = "\033[0;33m";  // YELLOW
+	public static final String BLUE = "\033[0;34m";    // BLUE
+	public static final String PURPLE = "\033[0;35m";  // PURPLE
+	public static final String CYAN = "\033[0;36m";    // CYAN
+	public static final String WHITE = "\033[0;37m";   // WHITE
 	
 	/**
 	 * 
@@ -60,7 +65,6 @@ public abstract class Animal {
 
 
 
-
 	/**
 	 * @return the pregnancy
 	 */
@@ -68,20 +72,12 @@ public abstract class Animal {
 		return pregnancy;
 	}
 
-
-
-
-
 	/**
 	 * @param pregnancy the pregnancy to set
 	 */
 	public void setPregnancy(int pregnancy) {
 		this.pregnancy = pregnancy;
 	}
-
-
-
-
 
 	/**
 	 * @return the specie
@@ -263,32 +259,17 @@ public abstract class Animal {
 
 	@Override
 	public String toString() {
-		String hungry, sick, sleep;
+		String animalName = PURPLE + getSpecie() + RESET;
+		String specie = getClass().getSimpleName();
+		String animalGender = getGender().toString();
+		String weight = YELLOW + getWeight() + "kg" + RESET;
+		String age = CYAN + getAge() + "Years" + RESET;
+		String size = RED + getSize() + "m" + RESET;
+		String hungry = isHungry() ? YELLOW + "Hungry" + RESET: "";
+		String sick = isSick() ? GREEN + "Sick" + RESET: "";
+		String sleeping = isSleeping() ? BLUE + "Sleeping" + RESET :"";
 
-		if (isHungry) {
-			 hungry = RED+"true"+RESET;
-		} else {
-			 hungry = GREEN+"false"+RESET;
-		}
-
-		if (isSick) {
-			 sick = RED+"true"+RESET;
-		} else {
-			 sick = GREEN+"false"+RESET;
-		}
-
-		if (isSleeping) {
-			 sleep = RED+"true"+RESET;
-		} else {
-			 sleep = GREEN+"false"+RESET;
-		}
-
-
-
-
-
-		return "\n"+ this.getClass().getSimpleName()+" -- Nom: " + specie + "\t gender=" + gender + "\t weight=" + weight + "\t age=" + age + "\t size="
-				+ size + "\t isHungry=" + hungry + "\t isSick=" + sick + "\t isSleeping=" + sleep ;
+		return (String.join(" ", animalName, specie, animalGender, weight, age, size, hungry, sick, sleeping));
 	}
 
 	
