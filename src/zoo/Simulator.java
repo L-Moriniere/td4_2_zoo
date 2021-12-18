@@ -76,6 +76,9 @@ public class Simulator implements Runnable {
         }
     }
 
+    /**
+     * Permet de rendre un animal aléatoire malade, si l'animal est déjà malade il meurt
+     */
     public void getAnimalSick() {
         Random random = new Random();
 
@@ -101,6 +104,9 @@ public class Simulator implements Runnable {
 
     }
 
+    /**
+     * Permet d'endormir un animal aléatoire
+     */
     public void getAnimalSleep() {
         Random random = new Random();
 
@@ -124,6 +130,9 @@ public class Simulator implements Runnable {
 
     }
 
+    /**
+     * Fonction qui permet de rendre un animal aléatoire affamé
+     */
     public void getAnimalHungry() {
         Random random = new Random();
 
@@ -145,6 +154,9 @@ public class Simulator implements Runnable {
         System.out.println("L'enclos est vide");
     }
 
+    /**
+     * Fonction qui salit un enclos aléatoire, si l'enclos est correct il devient sale et si il est déjà sale un animal aléatoire tombe malade
+     */
     public void getEnclosureDirty() {
         Random random = new Random();
 
@@ -168,6 +180,9 @@ public class Simulator implements Runnable {
         }
     }
 
+    /**
+     * Permet d'effectuer des évenement aléatoires quand l'utilisateur a fini de jouer
+     */
     private void randomAction() {
         Random random = new Random();
         int nbEventRand = random.nextInt(3) ;
