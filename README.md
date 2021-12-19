@@ -35,5 +35,5 @@ end  # Finir son tour.
 
 # 🛠 Exemple
 
-![Tuto](https://i.imgur.com/8nPLI0M.gif)
+![Tuto](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/44908e32-45ba-4faa-9d81-a900fe8f4be6/Demo.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20211219%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20211219T181948Z&X-Amz-Expires=86400&X-Amz-Signature=879c509d6ad900c34d19fa3b125e67df145ad74f4faef4a0a5f5f0bf65ad32ad&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Demo.gif%22&x-id=GetObject)
 
