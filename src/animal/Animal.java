@@ -1,5 +1,7 @@
 package animal;
 
+import zoo.Zoo;
+
 /**
  * @author logan
  *	Classe Animal
@@ -8,9 +10,11 @@ public abstract class Animal {
 	
 	private String specie;
 	private Gender gender;
-	private int weight, age, pregnancy;
+	private int weight, age, pregnancy, daysSincePregnant;
 	private double size;
-	private boolean isHungry, isSick, isSleeping;
+	private boolean isHungry, isSick, isSleeping, isPregnant;
+	private final Zoo zoo = Zoo.getInstance();
+
 
 	public static final String RESET = "\u001B[0m";
 	// Regular Colors
@@ -52,11 +56,25 @@ public abstract class Animal {
 		this.isHungry = false;
 		this.isSick = false;
 		this.isSleeping = false;
+		this.isPregnant = false;
 		this.pregnancy = pregnancy;
+		this.daysSincePregnant = 0;
 	}
 
 
+	/**
+	 * @return jour depuis le début de gestation
+	 */
+	public int getDaysSincePregnant() {
+		return daysSincePregnant;
+	}
 
+	/**
+	 * @param daysSincePregnant set jours depuis debut gestation
+	 */
+	public void setDaysSincePregnant(int daysSincePregnant) {
+		this.daysSincePregnant = daysSincePregnant;
+	}
 
 	/**
 	 * @return the pregnancy
@@ -176,7 +194,21 @@ public abstract class Animal {
 	 */
 	public void setSleeping(boolean isSleeping) {
 		this.isSleeping = isSleeping;
-	}	
+	}
+
+	/**
+	 * @return boolean is pregnant
+	 */
+	public boolean isPregnant() {
+		return isPregnant;
+	}
+
+	/**
+	 * @param pregnant is pregnant
+	 */
+	public void setPregnant(boolean pregnant) {
+		isPregnant = pregnant;
+	}
 	
 	public String animalSays() {
 		return this.getClass().getSimpleName()+" says: ";
@@ -257,8 +289,9 @@ public abstract class Animal {
 		String hungry = isHungry() ? YELLOW + " Hungry" + RESET: "";
 		String sick = isSick() ? GREEN + " Sick" + RESET : "";
 		String sleeping = isSleeping() ? BLUE + " Sleeping" + RESET: "";
+		String pregnant = isPregnant() ? RED + " Pregnant" + RESET: "";
 
-		return (String.join(" ", animalName, specie, animalGender, weight, age, size) + hungry + sick + sleeping);
+		return (String.join(" ", animalName, specie, animalGender, weight, age, size) + hungry + sick + sleeping + pregnant);
 	}
 
 	public String toSimpleString() {
@@ -268,9 +301,5 @@ public abstract class Animal {
 		return (String.join(" ", animalName, specie));
 	}
 
-	
-	
-	
 
-	
 }

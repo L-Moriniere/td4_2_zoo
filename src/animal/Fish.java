@@ -3,6 +3,10 @@
  */
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe Poisson étend d'Animal et implémente ovipare et peut nager
@@ -41,13 +45,18 @@ public class Fish extends Animal implements Oviparous, CanSwim {
 	 * Peut pondre des oeufs
 	 */
 	@Override
-	public void toLayEggs() {
+	public Animal toLayEggs() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New fishes appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+
+		return new Fish(name, gender, 1, 0, 0.1);
 	}
 
 

@@ -1,6 +1,12 @@
 
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
+import static zoo.Commands.coloredText;
+
 /**
  * @author logan
  * Classe Tigre etent d'Animal impélement peut vagabonder et mammifère
@@ -27,15 +33,21 @@ public class Tiger extends Animal implements CanVagabound, Mammal {
 
 	/**
 	 * Peut donner naissance
-	 */
+     * @return
+     */
 	@Override
-	public void toGiveBirth() {
+	public Animal toGiveBirth() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New tiger appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+
+		return new Tiger(name, gender, 2, 0, 1.3);
 	}
 
 	/**

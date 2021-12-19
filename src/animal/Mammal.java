@@ -6,6 +6,6 @@ package animal;
  */
 public interface Mammal {
 	
-	public void toGiveBirth();
+	public Animal toGiveBirth();
 
 }

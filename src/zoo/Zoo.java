@@ -9,6 +9,7 @@ import enclosure.Default_enclosure;
 import enclosure.Enclosure;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -20,11 +21,12 @@ public class Zoo {
     private Employee employee;
     private int nbMaxEnclosure;
     private ArrayList<Enclosure> listOfEnclosure = new ArrayList<Enclosure>();
+    private ArrayList<Animal> listOfPregnantAnimal = new ArrayList<Animal>();
 
     private Scanner scanner = new Scanner(System.in);
     private static Zoo _instance;
-    private int nbDeadAnimal =0;
-
+    private int nbDeadAnimal = 0;
+    private int days = 0;
 
 
     public static final String RESET = "\u001B[0m";
@@ -47,12 +49,10 @@ public class Zoo {
 
     /**
      * Constructeur
-     * @param name
-     * String name
-     * @param employee
-     * Employé du zoo
-     * @param nbMaxEnclosure
-     * Nombre max d'enclos
+     *
+     * @param name           String name
+     * @param employee       Employé du zoo
+     * @param nbMaxEnclosure Nombre max d'enclos
      */
     public Zoo(String name, Employee employee, int nbMaxEnclosure) {
         super();
@@ -142,20 +142,48 @@ public class Zoo {
     }
 
     /**
+     * @return nombre de jours
+     */
+    public int getDays() {
+        return days;
+    }
+
+    /**
+     * @param days set nb jours
+     */
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    /**
+     * @return liste animaux enceintes
+     */
+    public ArrayList<Animal> getListOfPregnantAnimal() {
+        return listOfPregnantAnimal;
+    }
+
+    /**
+     * @param listOfPregnantAnimal set liste animaux enceinte
+     */
+    public void setListOfPregnantAnimal(ArrayList<Animal> listOfPregnantAnimal) {
+        this.listOfPregnantAnimal = listOfPregnantAnimal;
+    }
+
+
+    /**
      * Ajout d'un enclos au zoo
-     * @param enclosure
-     * enclos à ajouter
+     *
+     * @param enclosure enclos à ajouter
      */
     public void addEnclosure(Enclosure enclosure) {
         if (this.getListOfEnclosure().size() < this.getNbMaxEnclosure()) {
             this.getListOfEnclosure().add(enclosure);
             System.out.println("Enclos " + GREEN + enclosure.getName() + RESET + " Was added");
-        }
-        else System.out.println("Le zoo a trop d'enclos");
+        } else System.out.println("Le zoo a trop d'enclos");
     }
 
 
-    public void printEnclosure(){
+    public void printEnclosure() {
         for (Enclosure e : listOfEnclosure) {
             System.out.println(String.join(" ", "(" + ((listOfEnclosure.indexOf(e) + 1)) + ").", e.toString()));
         }
@@ -188,33 +216,124 @@ public class Zoo {
      * @param e2 enclos 2
      * @return boolen si nb animal de e1 est > à nb_animal d'e2
      */
-    public boolean compareNbAnimal(Enclosure e1, Enclosure e2){
+    public boolean compareNbAnimal(Enclosure e1, Enclosure e2) {
         return e1.getNb_animal() >= e2.getNb_animal();
     }
 
     /**
      * Affiche les enclos triés par nb_animal
      */
-    public void printSortedEnclosure(){
+    public void printSortedEnclosure() {
 
         ArrayList<Enclosure> listSortedEnclosure = new ArrayList<>(this.getListOfEnclosure());
 
         int size = this.getListOfEnclosure().size();
 
-        for (int i =1; i < size; i++){
+        for (int i = 1; i < size; i++) {
             Enclosure current = this.getListOfEnclosure().get(i);
 
-            int j = i-1;
+            int j = i - 1;
 
-            while ((j > -1 ) && (compareNbAnimal(this.getListOfEnclosure().get(j), current))){
-                listSortedEnclosure.set(j+1, listSortedEnclosure.get((j)));
+            while ((j > -1) && (compareNbAnimal(this.getListOfEnclosure().get(j), current))) {
+                listSortedEnclosure.set(j + 1, listSortedEnclosure.get((j)));
                 j--;
             }
-            listSortedEnclosure.set(j+1, current);
+            listSortedEnclosure.set(j + 1, current);
         }
 
         System.out.println(listSortedEnclosure);
     }
+
+
+    /**
+     * Faire tomber enceinte une femelle dans un enclos aléatoire
+     */
+    public void getPregnant() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(this.getListOfEnclosure().size());
+        Enclosure enclos = this.getListOfEnclosure().get(1);
+
+        isCouple(enclos);
+
+    }
+
+    /**
+     * @param enclos enclos
+     * Verifier qu'il y a bien un couple possible d'animaux
+     */
+    public void isCouple(Enclosure enclos) {
+
+        int size = enclos.getListOfAnimal().size();
+
+        for (int i = 1; i < size; i++) {
+            Animal current = enclos.getListOfAnimal().get(i);
+            int j = i - 1;
+
+            while ((j > -1)) {
+                if (canMakeLove(current, enclos.getListOfAnimal().get(j))) System.out.println("Il y a de l'amour dans l'air dans l'enclos "+enclos.getName()+" ..<3");
+                j--;
+            }
+        }
+    }
+
+    /**
+     * @param a1 animal 1
+     * @param a2 animal 2
+     * @return boolean
+     * Verifier que les animaux sont de sexe différents et de la même espèce
+     */
+    public boolean canMakeLove(Animal a1, Animal a2) {
+        if (a1.getClass() == a2.getClass()) {
+            if (a1.getGender() != a2.getGender()) {
+                if (a1.getGender() == Gender.F && !a1.isPregnant()) {
+                    a1.setPregnant(true);
+                    this.getListOfPregnantAnimal().add(a1);
+                    return true;
+                } else if (a2.getGender() == Gender.F && !a2.isPregnant()) {
+                    a2.setPregnant(true);
+                    this.getListOfPregnantAnimal().add(a2);
+                    return true;
+                }
+            }
+            ;
+        }
+        return false;
+    }
+
+
+    /**
+     * Donne naissance à un nouvel animal 
+     */
+    public void giveBirthOrLayEggs() {
+        for (Animal animal : this.getListOfPregnantAnimal()) {
+            if (animal.getDaysSincePregnant() == animal.getPregnancy()) {
+                Commands.viewZoo();
+
+                System.out.println(Commands.coloredText(PURPLE, "Choisissez l'enclos dans lequel vous souhaitez ajouter le bébé (index)"));
+                int from = Commands.getUserInt(scanner, 1, this.getListOfEnclosure().size());
+                Enclosure e = this.getListOfEnclosure().get(from - 1);
+
+                if (animal instanceof Mammal) {
+                    if(!e.addAnimal(((Mammal) animal).toGiveBirth())) {
+                        Commands.addEnclosure();
+                        this.getListOfEnclosure().get(this.getListOfEnclosure().size()-1).addAnimal(((Mammal) animal).toGiveBirth());
+                    }
+                } else {
+                    if(!e.addAnimal(((Oviparous) animal).toLayEggs())){
+                        Commands.addEnclosure();
+                        this.getListOfEnclosure().get(this.getListOfEnclosure().size()-1).addAnimal(((Oviparous) animal).toLayEggs());
+                    }
+                }
+                animal.setPregnant(false);
+            } else {
+                int joursRestants = animal.getPregnancy() - animal.getDaysSincePregnant();
+                System.out.println("Plus que " + joursRestants + " jours avant de donner naissance pour " + animal.getSpecie());
+                animal.setDaysSincePregnant(animal.getDaysSincePregnant() + 1);
+            }
+        }
+    }
+
 
     /**
      * Faire un zoo prédéfini
@@ -228,11 +347,13 @@ public class Zoo {
         Aquarium lagon = new Aquarium("Lagon", 100, 4, 50);
         Aviary canyon = new Aviary("Canyon", 40, 4, 20);
 
-//        savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9));
+        savane.addAnimal(new Tiger(r.getFemaleName(), Gender.F, 120, 9, .9));
+        savane.addAnimal(new Tiger(r.getFemaleName(), Gender.M, 120, 9, .9));
         lagon.addAnimal(new Whale(r.getFemaleName(), Gender.F, 100, 500, 15.6));
-//        savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10));
+        savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10));
         lagon.addAnimal(new Shark(r.getMaleName(), Gender.M, 120, 9, .9));
         lagon.addAnimal(new Fish(r.getFemaleName(), Gender.F, 100, 500, 15.6));
+        lagon.addAnimal(new Fish(r.getFemaleName(), Gender.M, 100, 500, 15.6));
         canyon.addAnimal(new Auk(r.getMaleName(), Gender.M, 20, 20, 10));
         canyon.addAnimal(new Eagle(r.getFemaleName(), Gender.F, 20, 20, 10));
         savane.addAnimal(new Bear(r.getMaleName(), Gender.M, 100, 10, 2));
@@ -267,39 +388,42 @@ public class Zoo {
                 commands.addAnimal();
                 makeCustom();
             }
-            case 3 -> {}
+            case 3 -> {
+            }
             default -> makeCustom();
         }
     }
 
     public void startGame() {
         Commands commands = new Commands();
-        System.out.println(commands.coloredText(PURPLE, "Bonjour, vous avez lancé une nouvelle partie de Zootopia ! "));
+        System.out.println(Commands.coloredText(PURPLE, "Bonjour, vous avez lancé une nouvelle partie de Zootopia ! "));
 
-        System.out.println(commands.coloredText(PURPLE, "Quel est ton nom d'employé ?"));
-        String name = commands.getUserLine(scanner);
+        System.out.println(Commands.coloredText(PURPLE, "Quel est ton nom d'employé ?"));
+        String name = Commands.getUserLine(scanner);
 
-        System.out.println(commands.coloredText(PURPLE,"Quel est ton age ?"));
-        int age = commands.getUserInt(scanner, 1, 1000);
+        System.out.println(Commands.coloredText(PURPLE, "Quel est ton age ?"));
+        int age = Commands.getUserInt(scanner, 1, 1000);
 
-        System.out.println(commands.coloredText(PURPLE,"Quel est ton genre (M/F)?"));
+        System.out.println(Commands.coloredText(PURPLE, "Quel est ton genre (M/F)?"));
         EmployeeGender genre = commands.getUserEmployeeGender(scanner, EmployeeGender.values());
 
         Employee user = new Employee(name, genre, age);
         setEmployee(user);
 
         System.out.println(PURPLE + "Voulez-vous utiliser un preset défini (1) ou bien créer votre propre zoo (2)?" + RESET);
-        int reponseGame = commands.getUserInt(scanner, 1,2);
+        int reponseGame = Commands.getUserInt(scanner, 1, 2);
 
         switch (reponseGame) {
             case 1 -> makePreset();
             case 2 -> {
-                System.out.println(commands.coloredText(PURPLE, "Combien voulez vous d'enclos max dans votre zoo ?"));
-                setNbMaxEnclosure(commands.getUserInt(scanner, 2, 10));
+                System.out.println(Commands.coloredText(PURPLE, "Combien voulez vous d'enclos max dans votre zoo ?"));
+                setNbMaxEnclosure(Commands.getUserInt(scanner, 2, 10));
                 makeCustom();
             }
         }
     }
+
+
 
     public static void main(String[] args) {
         getInstance().startGame();
@@ -308,6 +432,7 @@ public class Zoo {
         Thread t1 = new Thread(Game);
         t1.start();
     }
+
 
 
 }

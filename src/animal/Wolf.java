@@ -3,6 +3,10 @@
  */
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe Loup qui étend d'Animal et implémente peut vagabonder et mammifère
@@ -30,15 +34,20 @@ public class Wolf extends Animal implements CanVagabound, Mammal {
 
 	/**
 	 * Donne naissance
-	 */
+     * @return
+     */
 	@Override
-	public void toGiveBirth() {
+	public Animal toGiveBirth() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New wolf appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+		return new Wolf(name, gender, 2, 0, 1.3);
 	}
 
 	/**

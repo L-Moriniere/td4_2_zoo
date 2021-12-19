@@ -1,5 +1,9 @@
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe pingouin qu ietend d'Animal et implémente ovipare, peut nager et peut voler
@@ -47,13 +51,17 @@ public class Auk extends Animal implements Oviparous, CanFly, CanSwim {
 	 * Permet de pondre des oeufs
 	 */
 	@Override
-	public void toLayEggs() {
+	public Animal toLayEggs() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New auk appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+		return new Auk(name, gender, 1, 0, 0.2);
 	}
 
 

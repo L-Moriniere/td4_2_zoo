@@ -1,5 +1,9 @@
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe Baleine étend d'Animal implémente mammifère et peut nager
@@ -27,15 +31,21 @@ public class Whale extends Animal implements Mammal, CanSwim {
 
 	/**
 	 * Donne naissance
-	 */
+     * @return
+     */
 	@Override
-	public void toGiveBirth() {
+	public Animal toGiveBirth() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New whale appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+
+		return new Whale(name, gender, 20, 0, 7);
 	}
 
 
