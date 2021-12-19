@@ -72,15 +72,15 @@ public class Aviary extends Enclosure {
 			{
 				this.getListOfAnimal().add(a);
 				this.setNb_animal(this.getNb_animal()+1);
-				System.out.println(String.join(" ", a.getClass().getSimpleName(), "\u001B[0;35m" + a.getSpecie() + "\u001B[0m", "a été ajouté"));
+				System.out.println(String.join(" ", a.getClass().getSimpleName(), "\u001B[0;35m" + a.getSpecie() + "\u001B[0m", "Was added"));
 				return true;
 			}
 			else {
-				System.out.println("\033[0;31m" + "Ce n'est pas un oiseau !" + "\u001B[0m");
+				System.out.println("\033[0;31m" + "It is not a bird" + "\u001B[0m");
 				return false;
 			}
 		}else {
-			System.out.println("\033[0;31m" + "L'enclos est plein !" + "\u001B[0m");
+			System.out.println("\033[0;31m" + "The enclosure is full !" + "\u001B[0m");
 			return false;
 		}
 	}
