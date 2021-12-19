@@ -37,12 +37,10 @@ public class Default_enclosure extends Enclosure {
 		if(this.getNb_max() > this.getNb_animal()) {
 			this.getListOfAnimal().add(a);
 			this.setNb_animal(this.getNb_animal() + 1);
-			System.out.println(String.join(" ", a.getClass().getSimpleName(), "\u001B[0;35m" + a.getSpecie() + "\u001B[0m", "Was added"));
+			System.out.println(String.join(" ", a.getClass().getSimpleName(), "\u001B[0;35m" + a.getSpecie() + "\u001B[0m", "a été ajouté"));
 			return true;
 		}else {
-			System.out.println("\033[0;31m" + "The enclosure is full !" + "\u001B[0m");
-			return false;
-
+			System.out.println("\033[0;31m" + "L'enclos est plein !" + "\u001B[0m");
 		}
 		return false;
 	}

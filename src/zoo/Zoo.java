@@ -148,8 +148,8 @@ public class Zoo {
      */
     public void addEnclosure(Enclosure enclosure) {
         if (this.getListOfEnclosure().size() < this.getNbMaxEnclosure()) {
-            this.getListOfEnclosure().add(e);
-            System.out.println("Enclos " + GREEN + e.getName() + RESET + " Was added");
+            this.getListOfEnclosure().add(enclosure);
+            System.out.println("Enclos " + GREEN + enclosure.getName() + RESET + " Was added");
         }
         else System.out.println("Le zoo a trop d'enclos");
     }
