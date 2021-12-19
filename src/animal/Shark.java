@@ -1,5 +1,9 @@
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe Requin étend d'Animal implémente ovipare et peut nager
@@ -38,13 +42,18 @@ public class Shark extends Animal implements Oviparous, CanSwim {
 	 * Peut pondre des oeufs
 	 */
 	@Override
-	public void toLayEggs() {
+	public Animal toLayEggs() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New shark appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+
+		return new Shark(name, gender, 3, 0, 1.5);
 	}
 
 

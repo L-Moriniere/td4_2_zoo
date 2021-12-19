@@ -6,6 +6,6 @@ package animal;
  */
 public interface Oviparous {
 	
-	public void toLayEggs();
+	public Animal toLayEggs();
 
 }

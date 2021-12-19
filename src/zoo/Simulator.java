@@ -192,11 +192,17 @@ public class Simulator implements Runnable {
 
     /**
      * Permet d'effectuer des évenement aléatoires quand l'utilisateur a fini de jouer
+     * 1. rendre un animal affamé
+     * 2. rendre un animal malade
+     * 3. endormir un animal
+     * 4. salir un enclos
+     * 5. 60% de chance de faire tomber enceinte une femelle
      */
     private void randomAction() {
         Random random = new Random();
         System.out.println();
-        System.out.println("Et poof ! Nous somme le lendemain");
+        zoo.setDays(zoo.getDays()+1);
+        System.out.println("Et poof ! Nous somme le lendemain - Jour "+zoo.getDays());
         System.out.println();
 
         int nbEventRand = random.nextInt(3) ;
@@ -213,7 +219,17 @@ public class Simulator implements Runnable {
                 case 4 -> getEnclosureDirty();
             }
         }
+        if (random.nextFloat() < 0.6) {
+            // 60% de chance de rentrer ici
+            zoo.getPregnant();
+        }
+        if (!zoo.getListOfPregnantAnimal().isEmpty()){
+            zoo.giveBirthOrLayEggs();
+            zoo.getListOfPregnantAnimal().removeIf(animal -> !animal.isPregnant());
+        }
     }
+
+
 
 
 }

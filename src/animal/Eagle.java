@@ -1,6 +1,10 @@
 
 package animal;
 
+import zoo.Commands;
+
+import java.util.Scanner;
+
 /**
  * @author logan
  * Classe aigle qu ihérite d'animal et implémente Ovipare et peut voler
@@ -40,13 +44,18 @@ public class Eagle extends Animal implements Oviparous, CanFly {
 	 * Peut pondre des oeufs
 	 */
 	@Override
-	public void toLayEggs() {
+	public Animal toLayEggs() {
 		// TODO Auto-generated method stub
-		if (this.getGender() !=  Gender.F) {
-			System.out.println("Tu n'es pas une femelle bro désolé !");
-		}else {
-			System.out.println("New eagle appeared !");
-		}
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le nom de l'animal ?"));
+		String name = Commands.getUserLine(scanner);
+
+		System.out.println(Commands.coloredText(PURPLE, "Quel est le sexe de l'animal (M/F)"));
+		Gender gender = Commands.getUserGender(scanner, Gender.values());
+
+
+		return new Eagle(name, gender, 2, 0, 0.4);
 	}
 
 

@@ -13,8 +13,8 @@ public class Commands {
     /**
      * Récupérer l'instances courant du zoo à l'aide du singleton
      */
-    private final Zoo zoo = Zoo.getInstance();
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Zoo zoo = Zoo.getInstance();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static final String RESET = "\u001B[0m";
     // Regular Colors
@@ -32,7 +32,7 @@ public class Commands {
      * @param input scanner d'entrer
      * @return Une chaîne de caractère valide taper par le joueur
      */
-    public String getUserLine(Scanner input){
+    public static String getUserLine(Scanner input){
         String value;
         value = "";
         while (true) {
@@ -89,7 +89,7 @@ public class Commands {
      * @param allow Enum.values() pour avoir la list des valeurs accepté
      * @return Le genre de l'animal correspondent à la saisie utilisateur
      */
-    public Gender getUserGender(Scanner input, Gender[] allow){
+    public static Gender getUserGender(Scanner input, Gender[] allow){
         Gender value;
         value = Gender.M;
         while (true) {
@@ -152,7 +152,7 @@ public class Commands {
      * @param maxValue Valeur maximal accepter
      * @return Un entier compris entre le min et max
      */
-    public Integer getUserInt(Scanner input, int minValue, int maxValue) {
+    public static Integer getUserInt(Scanner input, int minValue, int maxValue) {
         int value;
         value = 0;
         while (true) {
@@ -178,7 +178,7 @@ public class Commands {
      * @param maxValue Valeur maximal accepter
      * @return Un nombre flottant compris entre le min et max
      */
-    public Double getUserDouble(Scanner input, double minValue, double maxValue){
+    public static Double getUserDouble(Scanner input, double minValue, double maxValue){
         double value;
         value = 0.0;
         while (true) {
@@ -197,7 +197,7 @@ public class Commands {
         return (value);
     }
 
-    public String coloredText(String color, String Text){
+    public static String coloredText(String color, String Text){
         return color + Text + RESET;
     }
 
@@ -205,7 +205,7 @@ public class Commands {
      * Cette commande permet au joueur d'afficher l'état du zoo
      * @return true l'action sera donc comptabilisé
      */
-    public boolean viewZoo(){
+    public static boolean viewZoo(){
         zoo.printEnclosure();
         return true;
     }
@@ -282,7 +282,7 @@ public class Commands {
      * Cette commande permet au joueur d'ajouter un enclos au Zoo
      * @return True l'action sera donc comptabilisé
      */
-    public boolean addEnclosure(){
+    public static boolean addEnclosure(){
         System.out.println(coloredText(PURPLE, "Quel enclos voulez-vous ajouter ?"));
         System.out.println("""
                     1. Aquarium
