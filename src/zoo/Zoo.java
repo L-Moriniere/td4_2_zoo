@@ -252,7 +252,7 @@ public class Zoo {
         Random random = new Random();
 
         int randEnclosure = random.nextInt(this.getListOfEnclosure().size());
-        Enclosure enclos = this.getListOfEnclosure().get(1);
+        Enclosure enclos = this.getListOfEnclosure().get(randEnclosure);
 
         isCouple(enclos);
 
@@ -303,7 +303,7 @@ public class Zoo {
 
 
     /**
-     * Donne naissance à un nouvel animal 
+     * Donne naissance à un nouvel animal
      */
     public void giveBirthOrLayEggs() {
         for (Animal animal : this.getListOfPregnantAnimal()) {
@@ -353,7 +353,6 @@ public class Zoo {
         savane.addAnimal(new Wolf(r.getFemaleName(), Gender.F, 20, 20, 10));
         lagon.addAnimal(new Shark(r.getMaleName(), Gender.M, 120, 9, .9));
         lagon.addAnimal(new Fish(r.getFemaleName(), Gender.F, 100, 500, 15.6));
-        lagon.addAnimal(new Fish(r.getFemaleName(), Gender.M, 100, 500, 15.6));
         canyon.addAnimal(new Auk(r.getMaleName(), Gender.M, 20, 20, 10));
         canyon.addAnimal(new Eagle(r.getFemaleName(), Gender.F, 20, 20, 10));
         savane.addAnimal(new Bear(r.getMaleName(), Gender.M, 100, 10, 2));
