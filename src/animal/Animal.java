@@ -12,11 +12,16 @@ public abstract class Animal {
 	private double size;
 	private boolean isHungry, isSick, isSleeping;
 
-	public static final String GREEN = "\u001B[32m";
-	public static final String RED = "\u001B[31m";
-	public static final String PURPLE = "\u001B[35m";
-	public static final String WHITE = "\u001B[37m";
 	public static final String RESET = "\u001B[0m";
+	// Regular Colors
+	public static final String BLACK = "\033[0;30m";   // BLACK
+	public static final String RED = "\033[0;31m";     // RED
+	public static final String GREEN = "\033[0;32m";   // GREEN
+	public static final String YELLOW = "\033[0;33m";  // YELLOW
+	public static final String BLUE = "\033[0;34m";    // BLUE
+	public static final String PURPLE = "\033[0;35m";  // PURPLE
+	public static final String CYAN = "\033[0;36m";    // CYAN
+	public static final String WHITE = "\033[0;37m";   // WHITE
 	
 	/**
 	 * 
@@ -25,8 +30,6 @@ public abstract class Animal {
 		super();
 	}
 
-
-	
 	/**
 	 * @param specie
 	 * String espece
@@ -55,7 +58,6 @@ public abstract class Animal {
 
 
 
-
 	/**
 	 * @return the pregnancy
 	 */
@@ -63,20 +65,12 @@ public abstract class Animal {
 		return pregnancy;
 	}
 
-
-
-
-
 	/**
 	 * @param pregnancy the pregnancy to set
 	 */
 	public void setPregnancy(int pregnancy) {
 		this.pregnancy = pregnancy;
 	}
-
-
-
-
 
 	/**
 	 * @return the specie
@@ -203,7 +197,7 @@ public abstract class Animal {
 			System.out.println(this.animalSays()+"Miam miam");
 		}
 		else
-			System.out.println(this.animalSays()+"Je n'ai pas faim");
+			System.out.println(this.animalSays()+ RED + "Je n'ai pas faim" + RESET);
 	}
 	
 	
@@ -220,7 +214,7 @@ public abstract class Animal {
 			this.setSick(false);
 			System.out.println(this.animalSays() + "Merci maître");
 		}
-		else System.out.println("Je suis déjà en pleine forme");
+		else System.out.println(RED +"Je suis déjà en pleine forme" + RESET);
 	}
 	
 	
@@ -234,7 +228,7 @@ public abstract class Animal {
 			System.out.println(this.animalSays()+"Je me réveille");
 		}
 		else
-			System.out.println(this.animalSays()+"Je vais dormir");
+			System.out.println(this.animalSays()+ RED + "Je ne dors pas" + RESET);
 			
 	}
 	
@@ -245,45 +239,33 @@ public abstract class Animal {
 		if (!this.isSleeping())
 		{
 			this.setSleeping(true);
-			System.out.println(this.animalSays()+"Je dors");
+			System.out.println(this.animalSays()+"Je vais dormir");
 		}
 		else
 			System.out.println(this.animalSays()+"zzzzzzzzzzzzzzzzzzzzzz");
 			
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
-		String hungry, sick, sleep;
+		String animalName = PURPLE + getSpecie() + RESET;
+		String specie = getClass().getSimpleName();
+		String animalGender = getGender().toString();
+		String weight = YELLOW + getWeight() + "kg" + RESET;
+		String age = CYAN + getAge() + "Years" + RESET;
+		String size = RED + getSize() + "m" + RESET;
+		String hungry = isHungry() ? YELLOW + " Hungry" + RESET: "";
+		String sick = isSick() ? GREEN + " Sick" + RESET : "";
+		String sleeping = isSleeping() ? BLUE + " Sleeping" + RESET: "";
 
-		if (isHungry) {
-			 hungry = RED+"true"+RESET;
-		} else {
-			 hungry = GREEN+"false"+RESET;
-		}
+		return (String.join(" ", animalName, specie, animalGender, weight, age, size) + hungry + sick + sleeping);
+	}
 
-		if (isSick) {
-			 sick = RED+"true"+RESET;
-		} else {
-			 sick = GREEN+"false"+RESET;
-		}
+	public String toSimpleString() {
+		String animalName = PURPLE + getSpecie() + RESET;
+		String specie = getClass().getSimpleName();
 
-		if (isSleeping) {
-			 sleep = RED+"true"+RESET;
-		} else {
-			 sleep = GREEN+"false"+RESET;
-		}
-
-
-
-
-
-		return "\n"+ this.getClass().getSimpleName()+" -- Nom: " + specie + "\t gender=" + gender + "\t weight=" + weight + "\t age=" + age + "\t size="
-				+ size + "\t isHungry=" + hungry + "\t isSick=" + sick + "\t isSleeping=" + sleep ;
+		return (String.join(" ", animalName, specie));
 	}
 
 	

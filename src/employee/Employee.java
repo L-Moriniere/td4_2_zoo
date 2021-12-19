@@ -14,6 +14,14 @@ public class Employee {
 	private String name;
 	private EmployeeGender gender;
 	private int age;
+
+	/**
+	 * 
+	 */
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @param name
 	 * String nom
@@ -122,10 +130,10 @@ public class Employee {
 			int animalIndex = list.indexOf(a);
 			if (to.addAnimal(list.get(animalIndex))) {
 				from.removeAnimal(a);
+				this.toExaminate(from);
+				this.toExaminate(to);
+				System.out.println("The transfer was successful");
 			}
-			
-			this.toExaminate(from);
-			this.toExaminate(to);			
 		}else {
 			System.out.println("nope");
 		}

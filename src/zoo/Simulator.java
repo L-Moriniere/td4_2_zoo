@@ -1,103 +1,222 @@
 package zoo;
 
+import animal.Animal;
+import enclosure.Cleanness;
 import enclosure.Enclosure;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Random;
 
-public class Simulator extends TimerTask {
+public class Simulator implements Runnable {
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private Commands commandsList = new Commands();
     private int nbAction = 0;
     private int nbMaxAction = 3;
-    private String prefix = "!";
+    private String prefix = "";
+    private final Zoo zoo = Zoo.getInstance();
 
-    private Zoo zoo = Zoo.getInstance();
 
+    public static final String RESET = "\u001B[0m";
+    // Regular Colors
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String BLUE = "\033[0;34m";    // BLUE
+    public static final String PURPLE = "\033[0;35m";  // PURPLE
+    public static final String CYAN = "\033[0;36m";    // CYAN
+    public static final String WHITE = "\033[0;37m";   // WHITE
+
+    /**
+     * Cette methode est appelé au démarrage du Thread dans le main du Zoo
+     * Elle s'occupe de faire alterner entre une action aléatoire et le tour du joueur
+     */
     public void run() {
-        zoo.startGame();
-//        zootopia.printAnimals();
-//        zootopia.promptUserGeneral();
+        commandsList.help();
 
-        while (true) {
+        while (true){
             randomAction();
+            while (nbAction < nbMaxAction) {
+                userAction();
+            }
+            nbAction = 0;
         }
     }
 
     private void userAction() {
-        System.out.println("Tu as un total de 3 action à toi de bien les utiliser :");
+        System.out.println(PURPLE + "Action restante : " + RESET +
+                (nbMaxAction - nbAction) + "/" + nbMaxAction);
+        System.out.print(">");
         // Reading data using readLine
         try {
-            String userInput = this.reader.readLine();
+            String userInput = reader.readLine();
+            boolean Action = true;
+            boolean endTurn = false;
 
             if (userInput.startsWith(prefix)) {
 
                 String[] command = userInput.substring(this.prefix.length()).split(" +");
-                String commandName = command[0].toLowerCase(Locale.ROOT);
-
-                String[] args = new String[command.length - 1];
-
-                for (int i=1, k=0; i<command.length; i++){
-                    args[k++] = command[i];
-                }
-
-                System.out.println(Arrays.toString(command));
-                System.out.println(commandName);
-                System.out.println(Arrays.toString(args));
+                String commandName = command[0].toLowerCase();
 
                 switch (commandName) {
+                    case "feed" -> Action = commandsList.feed();
+                    case "clean" -> Action = commandsList.clean();
+                    case "addenclosure" -> Action = commandsList.addEnclosure();
+                    case "moveanimal" -> Action = commandsList.moveAnimal();
+                    case "zoo" -> Action = commandsList.viewZoo();
+                    case "addanimal" -> Action = commandsList.addAnimal();
+                    case "heal" -> Action = commandsList.heal();
+                    case "wakeup" -> Action = commandsList.wakeUp();
+                    case "end" -> endTurn = commandsList.endTurn();
                     case "leave" -> {
                         System.out.println("GoodBye");
                         System.exit(0);
                     }
-                    case "feed" -> {
-                        //this.zoo.getEmployee().toFeed();
-                        if(getEnclosureByName(args[0]) == null){
-                            System.out.println("Voici la list des enclos :");
-                            for(int i = 0; i < zoo.getListOfEnclosure().toArray().length; i++){
-                                System.out.println(zoo.getListOfEnclosure().get(i).getName());
-                            }
-                            userAction();
-                        }
-                        System.out.println(getEnclosureByName(args[0]));
-
-                        System.out.println("Test");
-                    }
-                    case "" -> {
-                        System.out.println("Test");
-                    }
-                    default -> {
-                        System.out.println("La commande rentrer est incorrect voici la list des commande :" +
-                                "\n!leave -> Quitter le jeux");
-                    }
+                    default -> Action = commandsList.help();
                 }
 
-                nbAction++;
-                System.out.println("Il te reste " + nbAction + "/3");
+                if (Action && !endTurn) nbAction++;
+                if (endTurn) nbAction = nbMaxAction;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Permet de rendre un animal aléatoire malade, si l'animal est déjà malade il meurt
+     */
+    public void getAnimalSick() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(enclos.getListOfAnimal().size());
+            Animal animal = enclos.getListOfAnimal().get(randAnimal);
+
+            if (!animal.isSick()) {
+                animal.setSick(true);
+                System.out.println(animal + " est malade, si vous ne le soignez pas il risque de mourir");
+            }
+
+            else {
+                System.out.println(animal + " est mort.. :(");
+                zoo.setNbDeadAnimal(zoo.getNbDeadAnimal() + 1);
+                enclos.getListOfAnimal().remove(animal);
+            }
+        }
 
     }
 
+    /**
+     * Permet d'endormir un animal aléatoire
+     */
+    public void getAnimalSleep() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
+            Animal animal = zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal);
+
+            if (!animal.isSleeping())
+            {
+                animal.setSleeping(true);
+                System.out.println(animal + " est très fatigué");
+            }
+            else
+                System.out.println(animal + " est déjà endormi");
+        }
+        else System.out.println("L'enclos est vide");
+
+    }
+
+    /**
+     * Fonction qui permet de rendre un animal aléatoire affamé
+     */
+    public void getAnimalHungry() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            int randAnimal = random.nextInt(zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().size());
+            Animal animal = zoo.getListOfEnclosure().get(randEnclosure).getListOfAnimal().get(randAnimal);
+
+            if (!animal.isHungry()) {
+                animal.setHungry(true);
+                System.out.println(animal.toSimpleString() + YELLOW + " a faim" + RESET);
+            }
+            else
+                System.out.println(animal.toSimpleString() + RED + " a déjà faim" + RESET);
+        }
+        else System.out.println("L'enclos est vide");
+    }
+
+    /**
+     * Fonction qui salit un enclos aléatoire, si l'enclos est correct il devient sale et si il est déjà sale un animal aléatoire tombe malade
+     */
+    public void getEnclosureDirty() {
+        Random random = new Random();
+
+        int randEnclosure = random.nextInt(zoo.getListOfEnclosure().size());
+        Enclosure enclos = zoo.getListOfEnclosure().get(randEnclosure);
+
+        if (!enclos.getListOfAnimal().isEmpty()) {
+
+            if (enclos.getCleanness() == Cleanness.GOOD) {
+                enclos.setCleanness(Cleanness.CORRECT);
+                System.out.println(enclos.toSimpleString());
+
+            }
+            else if (enclos.getCleanness() == Cleanness.CORRECT) {
+                enclos.setCleanness(Cleanness.BAD);
+                System.out.println(enclos.toSimpleString());
+            }
+            else {
+                getAnimalSick();
+            }
+        }
+    }
+
+    /**
+     * Permet d'effectuer des évenement aléatoires quand l'utilisateur a fini de jouer
+     */
     private void randomAction() {
-        System.out.println("random action");
-        while (nbAction < nbMaxAction) {
-            userAction();
+        Random random = new Random();
+        System.out.println();
+        System.out.println("Et poof ! Nous somme le lendemain");
+        System.out.println();
+
+        int nbEventRand = random.nextInt(3) ;
+        for (int i = 0; i <= nbEventRand; i++) {
+            if (zoo.getNbDeadAnimal() == 3) {
+                System.out.println(RED + "GAME OVER, tous les animaux sont morts" + RESET);
+                System.exit(0);
+            }
+            int randEvent = random.nextInt(4) + 1;
+            switch (randEvent) {
+                case 1 -> getAnimalHungry();
+                case 2 -> getAnimalSick();
+                case 3 -> getAnimalSleep();
+                case 4 -> getEnclosureDirty();
+            }
         }
-        nbAction = 0;
     }
 
-    private Enclosure getEnclosureByName(String enclosureName){
-        Enclosure e = null;
-        ArrayList<Enclosure> zooEnclosure = zoo.getListOfEnclosure();
-        for (int i = 0; i < zooEnclosure.toArray().length; i++) {
-            if(zooEnclosure.get(i).getName().toLowerCase(Locale.ROOT).equals(enclosureName.toLowerCase(Locale.ROOT)))
-                e = zooEnclosure.get(i);
-        }
-        return e;
-    }
+
 }
+
+
+
