@@ -5,7 +5,10 @@ package animal;
  * Interface mammifère, peut donner naissance
  */
 public interface Mammal {
-	
+
+	/**
+	 * @return Animal
+	 */
 	public Animal toGiveBirth();
 
 }

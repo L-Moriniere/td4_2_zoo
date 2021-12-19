@@ -33,9 +33,6 @@ public class Bear extends Animal implements Mammal {
         // TODO Auto-generated constructor stub
     }
 
-    public Bear() {
-
-    }
 
 
     /**

@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 
+/**
+ * Class simulator impélemente runnable
+ */
 public class Simulator implements Runnable {
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -46,6 +49,9 @@ public class Simulator implements Runnable {
         }
     }
 
+    /**
+     * action de l'utilisateur
+     */
     private void userAction() {
         System.out.println(PURPLE + "Action restante : " + RESET +
                 (nbMaxAction - nbAction) + "/" + nbMaxAction);

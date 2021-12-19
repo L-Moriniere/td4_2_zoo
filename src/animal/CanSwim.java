@@ -5,6 +5,9 @@ package animal;
  * Interface peut nager
  */
 public interface CanSwim {
-	
+
+	/**
+	 * permet de nager
+	 */
 	void toSwim();
 }

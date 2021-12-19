@@ -33,7 +33,7 @@ public class Tiger extends Animal implements CanVagabound, Mammal {
 
 	/**
 	 * Peut donner naissance
-     * @return
+     * @return animal
      */
 	@Override
 	public Animal toGiveBirth() {

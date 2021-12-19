@@ -235,7 +235,7 @@ public abstract class Enclosure {
 	 * Ajouter un animal
 	 * @param a
 	 * Animal à ajouter
-	 * @return
+	 * @return boolean
 	 */
 	public abstract boolean addAnimal(Animal a);
 

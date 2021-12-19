@@ -34,7 +34,7 @@ public class Wolf extends Animal implements CanVagabound, Mammal {
 
 	/**
 	 * Donne naissance
-     * @return
+     * @return animal
      */
 	@Override
 	public Animal toGiveBirth() {

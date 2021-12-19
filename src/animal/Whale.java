@@ -31,7 +31,7 @@ public class Whale extends Animal implements Mammal, CanSwim {
 
 	/**
 	 * Donne naissance
-     * @return
+     * @return animal
      */
 	@Override
 	public Animal toGiveBirth() {

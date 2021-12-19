@@ -10,7 +10,10 @@ import java.util.ArrayList;
  * Classe Volière étend d'Enclos
  */
 public class Aviary extends Enclosure {
-	
+
+	/**
+	 * hauteur
+	 */
 	private double height;
 
 	/**
@@ -63,7 +66,7 @@ public class Aviary extends Enclosure {
 	 * Permet d'ajouter un animal
 	 * @param a
 	 * Animal à ajouter
-	 * @return
+	 * @return boolean
 	 */
 	@Override
 	public boolean addAnimal(Animal a) {

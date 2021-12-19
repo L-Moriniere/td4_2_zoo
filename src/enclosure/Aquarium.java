@@ -10,8 +10,14 @@ import java.util.ArrayList;
  * Classe Aquarium étend d'Enclos
  */
 public class Aquarium extends Enclosure {
-	
+
+	/**
+	 * profondeur
+	 */
 	private double depth;
+	/**
+	 * salinité
+	 */
 	private double salinity;
 
 
@@ -84,7 +90,7 @@ public class Aquarium extends Enclosure {
 	/**
 	 * @param a
 	 * Animal à ajouter
-	 * @return
+	 * @return boolean
 	 */
 	@Override
 	public boolean addAnimal(Animal a) {

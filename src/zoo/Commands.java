@@ -9,6 +9,9 @@ import enclosure.Enclosure;
 
 import java.util.*;
 
+/**
+ * Classe commands
+ */
 public class Commands {
     /**
      * Récupérer l'instances courant du zoo à l'aide du singleton

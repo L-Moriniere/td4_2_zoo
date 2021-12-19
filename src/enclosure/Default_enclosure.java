@@ -30,7 +30,7 @@ public class Default_enclosure extends Enclosure {
 	 * Permet d'ajouter un animal
 	 * @param a
 	 * Animal à ajouter
-	 * @return
+	 * @return boolean
 	 */
 	@Override
 	public boolean addAnimal(Animal a) {

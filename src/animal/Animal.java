@@ -45,6 +45,7 @@ public abstract class Animal {
 	 * int age
 	 * @param size
 	 * double taille
+	 * @param pregnancy pregnancy
 	 */
 	public Animal(String specie, Gender gender, int weight, int age, double size, int pregnancy) {
 		super();
@@ -145,11 +146,17 @@ public abstract class Animal {
 	public void setSize(double size) {
 		this.size = size;
 	}
-	
+
+	/**
+	 * @return get gender
+	 */
 	public Gender getGender() {
 		return gender;
 	}
 
+	/**
+	 * @param gender set gender
+	 */
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
@@ -209,7 +216,10 @@ public abstract class Animal {
 	public void setPregnant(boolean pregnant) {
 		isPregnant = pregnant;
 	}
-	
+
+	/**
+	 * @return String
+	 */
 	public String animalSays() {
 		return this.getClass().getSimpleName()+" says: ";
 	}
@@ -294,6 +304,9 @@ public abstract class Animal {
 		return (String.join(" ", animalName, specie, animalGender, weight, age, size) + hungry + sick + sleeping + pregnant);
 	}
 
+	/**
+	 * @return simple string
+	 */
 	public String toSimpleString() {
 		String animalName = PURPLE + getSpecie() + RESET;
 		String specie = getClass().getSimpleName();
